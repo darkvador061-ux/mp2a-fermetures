@@ -32,7 +32,7 @@ const links = [
 
       <!-- Logo -->
       <NuxtLink to="/" class="header__logo" aria-label="MP2A Fermetures — Accueil">
-        <img :src="'/logo-header.png'" alt="MP2A Fermetures" class="header__logo-img" />
+        <img :src="$url('/logo-header.png')" alt="MP2A Fermetures" class="header__logo-img" />
       </NuxtLink>
 
       <!-- Nav desktop -->

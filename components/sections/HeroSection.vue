@@ -9,7 +9,7 @@
       <p class="hero__eyebrow">Portails · Volets · Portes de garage · Clôtures</p>
 
       <h1 class="hero__title">
-        <img :src="'/logo-text.png'" alt="MP2A Fermetures" class="hero__title-brand-img" />
+        <img :src="$url('/logo-text.png')" alt="MP2A Fermetures" class="hero__title-brand-img" />
         L'excellence de la fermeture,<br>
         <span class="hero__title-accent">dans le 06.</span>
       </h1>

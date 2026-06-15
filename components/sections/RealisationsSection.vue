@@ -52,7 +52,7 @@ const realisations = [
           <div class="realisations__media">
             <video
               v-if="r.type === 'video'"
-              :src="r.src"
+              :src="$url(r.src)"
               class="realisations__video"
               autoplay
               muted
@@ -62,7 +62,7 @@ const realisations = [
             ></video>
             <img
               v-else
-              :src="r.src"
+              :src="$url(r.src)"
               :alt="r.titre"
               class="realisations__img"
               loading="lazy"

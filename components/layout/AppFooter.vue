@@ -3,7 +3,7 @@
     <div class="container footer__inner">
       <div class="footer__brand">
         <a href="/" aria-label="Accueil MP2A Fermetures">
-          <img :src="'/logo-white.png'" alt="MP2A Fermetures" class="footer__logo-img" />
+          <img :src="$url('/logo-white.png')" alt="MP2A Fermetures" class="footer__logo-img" />
         </a>
         <p class="footer__tagline">Portails · Volets · Portes de garage<br>Alpes-Maritimes</p>
       </div>

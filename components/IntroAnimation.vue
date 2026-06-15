@@ -47,13 +47,13 @@ onMounted(async () => {
 
       <div id="intro-left" class="intro__half intro__half--left">
         <div class="intro__logo-wrap">
-          <img :src="'/logo-white.png'" alt="" class="intro__logo" />
+          <img :src="$url('/logo-white.png')" alt="" class="intro__logo" />
         </div>
       </div>
 
       <div id="intro-right" class="intro__half intro__half--right">
         <div class="intro__logo-wrap">
-          <img :src="'/logo-white.png'" alt="" class="intro__logo" />
+          <img :src="$url('/logo-white.png')" alt="" class="intro__logo" />
         </div>
       </div>
 
