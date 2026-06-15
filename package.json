@@ -1,0 +1,21 @@
+{
+  "name": "mp2a-fermetures",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxtjs/sitemap": "^6.0.0",
+    "@vueuse/motion": "^2.2.0",
+    "gsap": "^3.12.5",
+    "nuxt": "^3.17.0",
+    "swiper": "^11.2.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.1"
+  }
+}

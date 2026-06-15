@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 420" fill="none">
+
+  <g id="vantail-gauche">
+    <path d="M 68 52 L 192 38 L 192 218 L 68 238 Z" fill="#D0103A"/>
+    <rect x="58" y="30" width="20" height="30" rx="3" fill="#D0103A"/>
+    <polygon points="58,30 68,18 78,30" fill="#D0103A"/>
+    <path d="M 72 75  L 190 63  L 190 80  L 72 93  Z" fill="white"/>
+    <path d="M 72 110 L 190 98  L 190 115 L 72 128 Z" fill="white"/>
+    <path d="M 72 145 L 190 133 L 190 150 L 72 163 Z" fill="white"/>
+    <path d="M 72 180 L 190 168 L 190 185 L 72 198 Z" fill="white"/>
+  </g>
+
+  <g id="vantail-droit">
+    <path d="M 332 52 L 208 38 L 208 218 L 332 238 Z" fill="#D0103A"/>
+    <rect x="322" y="30" width="20" height="30" rx="3" fill="#D0103A"/>
+    <polygon points="322,30 332,18 342,30" fill="#D0103A"/>
+    <path d="M 328 75  L 210 63  L 210 80  L 328 93  Z" fill="white"/>
+    <path d="M 328 110 L 210 98  L 210 115 L 328 128 Z" fill="white"/>
+    <path d="M 328 145 L 210 133 L 210 150 L 328 163 Z" fill="white"/>
+    <path d="M 328 180 L 210 168 L 210 185 L 328 198 Z" fill="white"/>
+  </g>
+
+  <text
+    x="200" y="310"
+    text-anchor="middle"
+    font-family="'Big Shoulders Display', Arial Black, sans-serif"
+    font-weight="900"
+    font-size="96"
+    fill="#FFFFFF"
+    letter-spacing="2"
+  >MP2A</text>
+
+  <text
+    x="200" y="355"
+    text-anchor="middle"
+    font-family="'DM Sans', Arial, sans-serif"
+    font-weight="700"
+    font-size="28"
+    fill="#FFFFFF"
+    letter-spacing="10"
+  >FERMETURES</text>
+
+</svg>
