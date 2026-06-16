@@ -1,11 +1,8 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
 
 const props = defineProps({
-  preview: {
-    type: Boolean,
-    default: true
-  }
+  preview: { type: Boolean, default: true }
 })
 
 const realisations = [
@@ -93,9 +90,47 @@ const displayedItems = computed(() =>
     : realisations.filter(r => !r.homepage)
 )
 
+const lightboxImages = computed(() =>
+  displayedItems.value.filter(r => r.type === 'image')
+)
+
+const lightboxItem = ref(null)
+
+function openLightbox(item) {
+  if (item.type !== 'image') return
+  lightboxItem.value = item
+  if (typeof document !== 'undefined') document.body.style.overflow = 'hidden'
+}
+
+function closeLightbox() {
+  lightboxItem.value = null
+  if (typeof document !== 'undefined') document.body.style.overflow = ''
+}
+
+function navigate(dir) {
+  const items = lightboxImages.value
+  const idx = items.findIndex(i => i.src === lightboxItem.value.src)
+  const next = items[idx + dir]
+  if (next) lightboxItem.value = next
+}
+
+function currentIndex() {
+  return lightboxImages.value.findIndex(i => i.src === lightboxItem.value?.src)
+}
+
+function handleKey(e) {
+  if (!lightboxItem.value) return
+  if (e.key === 'Escape') closeLightbox()
+  if (e.key === 'ArrowLeft') navigate(-1)
+  if (e.key === 'ArrowRight') navigate(1)
+}
+
 function pad(n) {
   return String(n).padStart(2, '0')
 }
+
+onMounted(() => { if (typeof window !== 'undefined') window.addEventListener('keydown', handleKey) })
+onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListener('keydown', handleKey) })
 </script>
 
 <template>
@@ -123,6 +158,11 @@ function pad(n) {
           :key="i"
           class="realisations__item"
           :class="`realisations__item--${i + 1}`"
+          @click="openLightbox(r)"
+          role="button"
+          :aria-label="`Agrandir : ${r.titre}`"
+          tabindex="0"
+          @keydown.enter="openLightbox(r)"
         >
           <img
             :src="$url(r.src)"
@@ -184,6 +224,76 @@ function pad(n) {
 
     </div>
   </section>
+
+  <!-- Lightbox -->
+  <Teleport to="body">
+    <Transition name="lb">
+      <div
+        v-if="lightboxItem"
+        class="lightbox"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="lightboxItem.titre"
+        @click.self="closeLightbox"
+      >
+        <!-- Fermer -->
+        <button class="lightbox__close" @click="closeLightbox" aria-label="Fermer">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+
+        <!-- Précédent -->
+        <button
+          v-if="currentIndex() > 0"
+          class="lightbox__nav lightbox__prev"
+          @click="navigate(-1)"
+          aria-label="Photo précédente"
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+
+        <!-- Contenu -->
+        <div class="lightbox__content">
+          <Transition name="lb-img" mode="out-in">
+            <img
+              :key="lightboxItem.src"
+              :src="$url(lightboxItem.src)"
+              :alt="lightboxItem.titre"
+              class="lightbox__img"
+            />
+          </Transition>
+          <div class="lightbox__caption">
+            <span class="lightbox__caption-badge">{{ lightboxItem.categorie }}</span>
+            <p class="lightbox__caption-title">{{ lightboxItem.titre }}</p>
+            <span class="lightbox__caption-lieu">
+              <span class="lightbox__caption-dot" aria-hidden="true"></span>
+              {{ lightboxItem.lieu }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Suivant -->
+        <button
+          v-if="currentIndex() < lightboxImages.length - 1"
+          class="lightbox__nav lightbox__next"
+          @click="navigate(1)"
+          aria-label="Photo suivante"
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+
+        <!-- Compteur -->
+        <div class="lightbox__counter" aria-live="polite">
+          {{ currentIndex() + 1 }}<span>/</span>{{ lightboxImages.length }}
+        </div>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <style scoped>
@@ -301,42 +411,43 @@ function pad(n) {
   color: var(--color-white);
 }
 
-/* ── Galerie asymétrique accueil ── */
+/* ── Galerie "Bannière + Triptyque" ── */
 .realisations__gallery {
   flex: 1;
   display: grid;
+  background-color: var(--color-red); /* gaps = lignes rouges */
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 240px 180px;
-  gap: 3px;
+  grid-template-rows: 170px 210px;
+  gap: 2px;
 }
 
 @media (min-width: 640px) {
   .realisations__gallery {
-    grid-template-rows: 300px 220px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 160px 300px;
+    gap: 3px;
   }
 }
 
 @media (min-width: 1024px) {
   .realisations__gallery {
-    grid-template-columns: 2fr 1fr 1.5fr;
-    grid-template-rows: 330px 250px;
-    gap: 2px;
+    grid-template-rows: 180px 340px;
+    gap: 3px;
   }
 }
 
-/* Layout L-shape héro */
-/* Mobile : 2×2 classique */
-.realisations__item--1 { grid-column: 1; grid-row: 1; }
-.realisations__item--2 { grid-column: 2; grid-row: 1; }
-.realisations__item--3 { grid-column: 1; grid-row: 2; }
-.realisations__item--4 { grid-column: 2; grid-row: 2; }
+/* Mobile : 2×2 */
+.realisations__item--1 { grid-column: 1;     grid-row: 1; }
+.realisations__item--2 { grid-column: 2;     grid-row: 1; }
+.realisations__item--3 { grid-column: 1;     grid-row: 2; }
+.realisations__item--4 { grid-column: 2;     grid-row: 2; }
 
-/* Desktop : héro large + tall right + 2 petits bas */
-@media (min-width: 1024px) {
-  .realisations__item--1 { grid-column: 1 / 3; grid-row: 1; }
-  .realisations__item--2 { grid-column: 3;     grid-row: 1 / 3; }
-  .realisations__item--3 { grid-column: 1;     grid-row: 2; }
-  .realisations__item--4 { grid-column: 2;     grid-row: 2; }
+/* ≥640px : bannière pleine largeur + triptyque */
+@media (min-width: 640px) {
+  .realisations__item--1 { grid-column: 1 / 4; grid-row: 1; }
+  .realisations__item--2 { grid-column: 1;     grid-row: 2; }
+  .realisations__item--3 { grid-column: 2;     grid-row: 2; }
+  .realisations__item--4 { grid-column: 3;     grid-row: 2; }
 }
 
 .realisations__item {
@@ -432,7 +543,7 @@ function pad(n) {
   background-color: var(--color-red);
   color: var(--color-white);
   font-family: var(--font-body);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -454,7 +565,7 @@ function pad(n) {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 600;
   color: rgba(255,255,255,0.45);
   letter-spacing: 0.06em;
@@ -471,16 +582,28 @@ function pad(n) {
   flex-shrink: 0;
 }
 
-/* Ligne rouge signature sur item 1 — barre top full-width */
-.realisations__item--1::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background-color: var(--color-red);
-  z-index: 5;
+/* Item 1 (bannière) : overlay latéral + meta centrée */
+@media (min-width: 640px) {
+  .realisations__item--1 .realisations__overlay {
+    background: linear-gradient(
+      to right,
+      rgba(0,0,0,0.85) 0%,
+      rgba(0,0,0,0.3) 50%,
+      rgba(0,0,0,0.05) 100%
+    );
+    justify-content: flex-end;
+    padding: var(--space-6) var(--space-8);
+  }
+
+  .realisations__item--1 .realisations__num {
+    font-size: clamp(5rem, 10vw, 9rem);
+    bottom: auto;
+    top: 50%;
+    left: auto;
+    right: var(--space-6);
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.04);
+  }
 }
 
 /* ── Grille complète /realisations ── */
@@ -514,7 +637,7 @@ function pad(n) {
 
 .realisations__media {
   position: relative;
-  aspect-ratio: 9 / 16;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background-color: var(--color-black);
 }
@@ -577,4 +700,174 @@ function pad(n) {
     transition: none;
   }
 }
+
+/* ══════════════════════════════
+   LIGHTBOX
+══════════════════════════════ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(0, 0, 0, 0.97);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+
+/* Transition overlay */
+.lb-enter-active { transition: opacity 260ms ease; }
+.lb-leave-active { transition: opacity 200ms ease; }
+.lb-enter-from,
+.lb-leave-to    { opacity: 0; }
+
+/* Contenu qui monte au chargement */
+.lb-enter-active .lightbox__content {
+  transition: transform 420ms cubic-bezier(0.34, 1.4, 0.64, 1), opacity 300ms ease;
+}
+.lb-enter-from .lightbox__content {
+  transform: scale(0.88) translateY(16px);
+  opacity: 0;
+}
+
+/* Transition image nav gauche/droite */
+.lb-img-enter-active { transition: opacity 200ms ease, transform 260ms ease; }
+.lb-img-leave-active { transition: opacity 160ms ease, transform 200ms ease; }
+.lb-img-enter-from   { opacity: 0; transform: scale(0.97); }
+.lb-img-leave-to     { opacity: 0; transform: scale(1.03); }
+
+/* Fermer */
+.lightbox__close {
+  position: absolute;
+  top: var(--space-6);
+  right: var(--space-6);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  cursor: pointer;
+  transition: color 200ms ease, border-color 200ms ease, background 200ms ease;
+  flex-shrink: 0;
+}
+.lightbox__close:hover {
+  color: var(--color-white);
+  border-color: var(--color-red);
+  background: rgba(227,6,19,0.12);
+}
+
+/* Nav flèches */
+.lightbox__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.45);
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  cursor: pointer;
+  transition: color 200ms ease, border-color 200ms ease, background 200ms ease, transform 200ms ease;
+}
+.lightbox__prev { left: var(--space-6); }
+.lightbox__next { right: var(--space-6); }
+
+.lightbox__nav:hover {
+  color: var(--color-white);
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.08);
+}
+.lightbox__prev:hover { transform: translateY(-50%) translateX(-2px); }
+.lightbox__next:hover { transform: translateY(-50%) translateX(2px); }
+
+/* Contenu */
+.lightbox__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  max-width: min(90vw, 1100px);
+}
+
+.lightbox__img {
+  display: block;
+  max-width: 100%;
+  max-height: 76vh;
+  object-fit: contain;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+/* Caption */
+.lightbox__caption {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.lightbox__caption-badge {
+  padding: 2px var(--space-3);
+  background-color: var(--color-red);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.lightbox__caption-title {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-base), 2vw, var(--text-xl));
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-white);
+  letter-spacing: 0.02em;
+  max-width: none;
+}
+
+.lightbox__caption-lieu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lightbox__caption-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--color-red);
+  flex-shrink: 0;
+}
+
+/* Compteur */
+.lightbox__counter {
+  position: absolute;
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.lightbox__counter span { color: rgba(255,255,255,0.15); }
 </style>

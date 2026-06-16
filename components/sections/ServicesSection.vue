@@ -9,7 +9,7 @@ defineProps({
 const services = [
   {
     id: 'portails',
-    icon: '🚪',
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="3" x2="4" y2="21"/><line x1="20" y1="3" x2="20" y2="21"/><line x1="4" y1="8" x2="11" y2="8"/><line x1="4" y1="13" x2="11" y2="13"/><line x1="4" y1="18" x2="11" y2="18"/><line x1="20" y1="8" x2="13" y2="8"/><line x1="20" y1="13" x2="13" y2="13"/><line x1="20" y1="18" x2="13" y2="18"/></svg>`,
     title: 'Portails',
     short: 'Coulissants, battants, motorisés — installation sur mesure pour particuliers et professionnels.',
     detail: 'Nous installons tous types de portails : coulissants, battants, autoportants. Motorisation intégrée, télécommande, badge ou interphone. Matériaux : aluminium, acier, PVC, bois.',
@@ -17,7 +17,7 @@ const services = [
   },
   {
     id: 'portes-garage',
-    icon: '🏠',
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="14" x2="21" y2="14"/></svg>`,
     title: 'Portes de garage',
     short: 'Sectionnelles, basculantes, enroulables — installation et motorisation toutes marques.',
     detail: 'Installation de portes de garage sectionnelles, basculantes et enroulables. Motorisation silencieuse, télécommande universelle, mise en sécurité conforme aux normes.',
@@ -25,7 +25,7 @@ const services = [
   },
   {
     id: 'volets',
-    icon: '🪟',
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="5" x2="21" y2="5"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="13" x2="21" y2="13"/><line x1="3" y1="17" x2="21" y2="17"/><line x1="3" y1="21" x2="21" y2="21"/></svg>`,
     title: 'Volets roulants',
     short: 'Installation, motorisation et remplacement de volets roulants sur toute la côte.',
     detail: 'Volets roulants aluminium ou PVC, motorisés ou manuels. Remplacement de tabliers, réparation de mécanismes, motorisation de volets existants.',
@@ -33,7 +33,7 @@ const services = [
   },
   {
     id: 'motorisation',
-    icon: '⚙️',
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
     title: 'Motorisation',
     short: 'Automatisez vos portails et accès existants. Compatible toutes marques.',
     detail: 'Motorisation de portails, portes et volets existants. Centrales Nice, Somfy, BFT, FAAC. Programmation, télécommandes, applications smartphone.',
@@ -41,7 +41,7 @@ const services = [
   },
   {
     id: 'depannage',
-    icon: '🔧',
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
     title: 'Dépannage & maintenance',
     short: 'Intervention rapide en cas de panne. Contrats d\'entretien pour syndics et entreprises.',
     detail: 'Dépannage urgent portails et automatismes en panne. Remplacement de pièces toutes marques. Contrats de maintenance annuels pour copropriétés et professionnels.',
@@ -49,7 +49,7 @@ const services = [
   },
   {
     id: 'clotures',
-    icon: '🛡️',
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
     title: 'Clôtures & contrôle d\'accès',
     short: 'Clôtures aluminium, grillage, interphones, visiphones et badges d\'accès.',
     detail: 'Pose de clôtures aluminium, rigides ou grillagées. Systèmes de contrôle d\'accès : interphones, visiphones, claviers à code, badges RFID pour résidences et entreprises.',
@@ -62,7 +62,12 @@ const services = [
   <section class="services" :id="preview ? 'services' : undefined">
     <div class="container">
 
-      <div class="services__header">
+      <div
+        class="services__header"
+        v-motion
+        :initial="{ opacity: 0, y: 30 }"
+        :visible-once="{ opacity: 1, y: 0, transition: { duration: 600 } }"
+      >
         <p class="services__eyebrow">Ce que nous faisons</p>
         <h2 class="services__title">Nos prestations</h2>
         <p class="services__intro">
@@ -72,11 +77,14 @@ const services = [
 
       <div class="services__grid">
         <article
-          v-for="service in services"
+          v-for="(service, index) in services"
           :key="service.id"
           class="services__card"
+          v-motion
+          :initial="{ opacity: 0, y: 40 }"
+          :visible-once="{ opacity: 1, y: 0, transition: { duration: 500, delay: index * 70 } }"
         >
-          <div class="services__card-icon" aria-hidden="true">{{ service.icon }}</div>
+          <div class="services__card-icon" aria-hidden="true" v-html="service.icon"></div>
           <h3 class="services__card-title">{{ service.title }}</h3>
           <p class="services__card-text">
             {{ preview ? service.short : service.detail }}
@@ -105,6 +113,7 @@ const services = [
 .services {
   padding-block: var(--space-24);
   background-color: var(--bg);
+  border-bottom: 3px solid var(--color-red);
 }
 
 /* ── En-tête ── */
@@ -175,8 +184,11 @@ const services = [
 }
 
 .services__card-icon {
-  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   margin-bottom: var(--space-4);
+  color: var(--color-red);
   line-height: 1;
 }
 

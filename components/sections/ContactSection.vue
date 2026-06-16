@@ -135,12 +135,8 @@ async function handleSubmit() {
         <aside class="contact__info">
           <div class="contact__info-block">
             <p class="contact__info-label">Téléphones</p>
-            <a href="tel:+33698258937" class="contact__info-link">
-              Anthony — 06 98 25 89 37
-            </a>
-            <a href="tel:+33684230376" class="contact__info-link">
-              Alexandre — 06 84 23 03 76
-            </a>
+            <span class="contact__info-text">Anthony — 06 98 25 89 37</span>
+            <span class="contact__info-text">Alexandre — 06 84 23 03 76</span>
           </div>
 
           <div class="contact__info-block">
@@ -173,8 +169,8 @@ async function handleSubmit() {
 <style scoped>
 .contact {
   padding-block: var(--space-24);
-  background-color: var(--color-black);
-  color: var(--color-white);
+  background-color: var(--bg-alt);
+  color: var(--text);
 }
 
 /* ── En-tête ── */
@@ -198,7 +194,7 @@ async function handleSubmit() {
   font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
   font-weight: 900;
   text-transform: uppercase;
-  color: var(--color-white);
+  color: var(--color-black);
   margin-bottom: var(--space-4);
 }
 
@@ -253,29 +249,29 @@ async function handleSubmit() {
   font-size: var(--text-sm);
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--color-grey);
+  color: var(--color-grey-dark);
   text-transform: uppercase;
 }
 
 .contact__input {
   padding: var(--space-4);
-  background-color: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: var(--color-white);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-grey);
+  color: var(--color-black);
   font-size: var(--text-base);
   font-family: var(--font-body);
-  transition: border-color var(--transition-base), background-color var(--transition-base);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
   appearance: none;
 }
 
 .contact__input::placeholder {
-  color: rgba(255,255,255,0.25);
+  color: var(--color-grey-mid);
 }
 
 .contact__input:focus {
   outline: none;
   border-color: var(--color-red);
-  background-color: rgba(255,255,255,0.09);
+  box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.08);
 }
 
 .contact__select {
@@ -287,8 +283,8 @@ async function handleSubmit() {
 }
 
 .contact__select option {
-  background-color: var(--color-black);
-  color: var(--color-white);
+  background-color: var(--color-white);
+  color: var(--color-black);
 }
 
 .contact__textarea {
@@ -325,7 +321,8 @@ async function handleSubmit() {
 .contact__success {
   text-align: center;
   padding: var(--space-16);
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid var(--color-grey);
+  background-color: var(--color-white);
 }
 
 .contact__success-icon {
@@ -345,7 +342,7 @@ async function handleSubmit() {
   font-size: var(--text-3xl);
   font-weight: 900;
   text-transform: uppercase;
-  color: var(--color-white);
+  color: var(--color-black);
   margin-bottom: var(--space-3);
 }
 
@@ -376,7 +373,7 @@ async function handleSubmit() {
 .contact__info-link {
   font-size: var(--text-base);
   font-weight: 600;
-  color: var(--color-white);
+  color: var(--color-black);
   transition: color var(--transition-fast);
 }
 

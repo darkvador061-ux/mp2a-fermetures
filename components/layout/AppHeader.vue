@@ -44,9 +44,9 @@ const links = [
       </nav>
 
       <!-- CTA desktop -->
-      <a href="tel:+33698258937" class="header__cta">
+      <NuxtLink to="/contact" class="header__cta">
         Devis gratuit
-      </a>
+      </NuxtLink>
 
       <!-- Burger -->
       <button
@@ -81,12 +81,12 @@ const links = [
             </li>
           </ul>
         </nav>
-        <a href="tel:+33698258937" class="header__mobile-cta">
-          Appeler pour un devis
-        </a>
-        <a href="tel:+33684230376" class="header__mobile-phone">
+        <NuxtLink to="/contact" class="header__mobile-cta">
+          Demander un devis
+        </NuxtLink>
+        <span class="header__mobile-phone">
           06 84 23 03 76 — Alexandre
-        </a>
+        </span>
       </div>
     </Transition>
 

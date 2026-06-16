@@ -35,7 +35,7 @@ useHead({
         <p class="realisations-cta__text">Demandez un devis gratuit — réponse sous 24h.</p>
         <div class="realisations-cta__btns">
           <NuxtLink to="/contact" class="realisations-cta__btn-primary">Demander un devis gratuit</NuxtLink>
-          <a href="tel:+33698258937" class="realisations-cta__btn-secondary">06 98 25 89 37</a>
+          <NuxtLink to="/contact" class="realisations-cta__btn-secondary">Nous contacter</NuxtLink>
         </div>
       </div>
     </section>

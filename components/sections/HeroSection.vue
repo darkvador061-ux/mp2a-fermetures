@@ -1,7 +1,6 @@
 <template>
   <section class="hero" aria-label="Présentation MP2A Fermetures">
-    <!-- Fond : mettre votre photo dans /public/hero-bg.jpg -->
-    <div class="hero__bg" aria-hidden="true">
+    <div class="hero__bg" aria-hidden="true" ref="heroBg">
       <div class="hero__overlay"></div>
     </div>
 
@@ -9,9 +8,8 @@
       <p class="hero__eyebrow">Portails · Volets · Portes de garage · Clôtures</p>
 
       <h1 class="hero__title">
-        <img :src="$url('/logo-text.png')" alt="MP2A Fermetures" class="hero__title-brand-img" />
-        L'excellence de la fermeture,<br>
-        <span class="hero__title-accent">dans le 06.</span>
+        Votre expert portails<br>
+        <span class="hero__title-accent">&amp; fermetures 06.</span>
       </h1>
 
       <p class="hero__subtitle">
@@ -22,14 +20,11 @@
         <NuxtLink to="/contact" class="hero__cta-primary">
           Demander un devis gratuit
         </NuxtLink>
-        <div class="hero__cta-phone-wrap">
-          <a href="tel:+33698258937" class="hero__cta-secondary">
-            <svg class="hero__cta-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-            </svg>
-            06 98 25 89 37
-          </a>
-          <span class="hero__cta-click-to-call">Click-to-Call</span>
+        <div class="hero__phone-display" aria-label="Téléphone : 06 98 25 89 37">
+          <svg class="hero__cta-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          06 98 25 89 37
         </div>
       </div>
 
@@ -49,17 +44,6 @@
           <strong>Devis</strong>
           <span>gratuit & rapide</span>
         </div>
-        <div class="hero__badge-sep" aria-hidden="true"></div>
-        <!-- Badge Artisan Certifié -->
-        <div class="hero__badge-certified" aria-label="Artisan Certifié">
-          <svg class="hero__badge-certified-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-          <div class="hero__badge-certified-text">
-            <strong>Artisan</strong>
-            <span>Certifié</span>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -69,6 +53,27 @@
     </a>
   </section>
 </template>
+
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const heroBg = ref(null)
+let rafId = null
+
+function onScroll() {
+  if (rafId) return
+  rafId = requestAnimationFrame(() => {
+    if (heroBg.value) {
+      const pct = 50 + window.scrollY * 0.018
+      heroBg.value.style.backgroundPositionY = `${pct}%`
+    }
+    rafId = null
+  })
+}
+
+onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
+onUnmounted(() => window.removeEventListener('scroll', onScroll))
+</script>
 
 <style scoped>
 /* ── Hero ── */
@@ -83,38 +88,14 @@
   overflow: hidden;
 }
 
-/* ── Fond ── */
+/* ── Fond photo ── */
 .hero__bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    #0A0A0A 0%,
-    #111111 50%,
-    #0d0d0d 100%
-  );
-}
-
-/* Ligne rouge décorative verticale gauche */
-.hero__bg::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: var(--color-red);
-}
-
-/* Grille décorative en fond */
-.hero__bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
-  background-size: 60px 60px;
+  background-image: url('/hero-villa.jpg');
+  background-size: cover;
+  background-position: center 50%;
+  will-change: background-position-y;
 }
 
 .hero__overlay {
@@ -122,9 +103,9 @@
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(10,10,10,0.3) 0%,
-    rgba(10,10,10,0.5) 60%,
-    rgba(10,10,10,0.85) 100%
+    rgba(10,10,10,0.55) 0%,
+    rgba(10,10,10,0.45) 50%,
+    rgba(10,10,10,0.80) 100%
   );
 }
 
@@ -245,25 +226,20 @@
   border-color: var(--color-red-dark);
 }
 
-.hero__cta-secondary {
+.hero__phone-display {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-4) var(--space-6);
-  border: 2px solid rgba(255,255,255,0.3);
-  color: var(--color-white);
+  border: 2px solid rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.7);
   font-family: var(--font-display);
   font-weight: 700;
   font-size: var(--text-base);
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  transition: border-color var(--transition-base), background-color var(--transition-base);
   white-space: nowrap;
-}
-
-.hero__cta-secondary:hover {
-  border-color: var(--color-white);
-  background-color: rgba(255,255,255,0.08);
+  user-select: text;
 }
 
 .hero__cta-icon {
@@ -271,22 +247,6 @@
   flex-shrink: 0;
 }
 
-/* Wrapper téléphone + Click-to-Call */
-.hero__cta-phone-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.hero__cta-click-to-call {
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  color: rgba(255,255,255,0.4);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
 
 /* Badges */
 .hero__badges {
@@ -344,45 +304,6 @@
   flex-shrink: 0;
 }
 
-/* ── Badge Artisan Certifié ── */
-.hero__badge-certified {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  border: 1.5px solid #C9A84C;
-  border-radius: 4px;
-}
-
-.hero__badge-certified-icon {
-  display: block;
-  color: #C9A84C;
-  flex-shrink: 0;
-}
-
-.hero__badge-certified-text {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.hero__badge-certified-text strong {
-  font-family: var(--font-display);
-  font-size: var(--text-sm);
-  font-weight: 900;
-  color: #C9A84C;
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.hero__badge-certified-text span {
-  font-size: var(--text-xs);
-  font-weight: 500;
-  color: rgba(201, 168, 76, 0.65);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
 
 /* Flèche scroll */
 .hero__scroll {

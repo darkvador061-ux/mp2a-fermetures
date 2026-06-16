@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     preset: 'static',
   },
 
-  modules: ['@nuxtjs/sitemap'],
+  modules: ['@nuxtjs/sitemap', '@vueuse/motion/nuxt'],
 
   components: [
     { path: '~/components', pathPrefix: false },

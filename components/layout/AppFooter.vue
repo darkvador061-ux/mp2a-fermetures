@@ -17,8 +17,8 @@
       </nav>
 
       <div class="footer__contact">
-        <a href="tel:+33698258937">06 98 25 89 37 — Anthony</a>
-        <a href="tel:+33684230376">06 84 23 03 76 — Alexandre</a>
+        <span>06 98 25 89 37 — Anthony</span>
+        <span>06 84 23 03 76 — Alexandre</span>
         <a href="mailto:contact@mp2afermetures.fr">contact@mp2afermetures.fr</a>
         <address>Hameau du Canadel, Villa 11<br>309 Bd Honoré Teisseire<br>06480 La Colle-sur-Loup</address>
       </div>
@@ -64,7 +64,7 @@
 }
 
 .footer__logo-img {
-  height: 100px;
+  height: 44px;
   width: auto;
   display: block;
 }
