@@ -21,7 +21,6 @@ const links = [
   { to: '/', label: 'Accueil' },
   { to: '/services', label: 'Services' },
   { to: '/realisations', label: 'Réalisations' },
-  { to: '/avis', label: 'Avis' },
   { to: '/contact', label: 'Contact' },
 ]
 </script>

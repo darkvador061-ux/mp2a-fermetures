@@ -12,7 +12,6 @@
         <ul>
           <li><NuxtLink to="/services">Services</NuxtLink></li>
           <li><NuxtLink to="/realisations">Réalisations</NuxtLink></li>
-          <li><NuxtLink to="/avis">Avis clients</NuxtLink></li>
           <li><NuxtLink to="/contact">Contact & Devis</NuxtLink></li>
         </ul>
       </nav>
