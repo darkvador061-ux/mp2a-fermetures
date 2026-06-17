@@ -85,9 +85,10 @@ const links = [
         <NuxtLink to="/contact" class="header__mobile-cta">
           Demander un devis
         </NuxtLink>
-        <span class="header__mobile-phone">
-          06 84 23 03 76 — Alexandre
-        </span>
+        <div class="header__mobile-phones">
+          <span class="header__mobile-phone">06 98 25 89 37 — Anthony</span>
+          <span class="header__mobile-phone">06 84 23 03 76 — Alexandre</span>
+        </div>
       </div>
     </Transition>
 
@@ -296,6 +297,13 @@ const links = [
 
 .header__mobile-cta:hover {
   background-color: var(--color-red-dark);
+}
+
+.header__mobile-phones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
 }
 
 .header__mobile-phone {
