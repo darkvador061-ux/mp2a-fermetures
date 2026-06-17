@@ -1,5 +1,5 @@
 # Transmission — Site MP2A Fermetures
-*État au 2026-06-16 — À lire en début de prochaine session*
+*État au 2026-06-17 — À lire en début de prochaine session*
 
 ---
 
@@ -9,10 +9,11 @@ Site vitrine professionnel pour **MP2A Fermetures** (portails, volets roulants, 
 
 **But :** générer des demandes de devis et des appels entrants depuis les Alpes-Maritimes (06).
 
-- Stack : Nuxt 3 SSG + CSS natif + GSAP (abandonné — voir ci-dessous)
+- Stack : Nuxt 3 SSG + CSS natif + GSAP (abandonné — remplacé par CSS gate pure)
 - Hébergement cible : Hostinger (FTP, public_html)
 - GitHub Pages actif : `darkvador061-ux.github.io/mp2a-fermetures`
 - Repo GitHub : `https://github.com/darkvador061-ux/mp2a-fermetures`
+- Branche unique : `master` — impossible de créer des PRs, pousser directement
 
 ---
 
@@ -21,89 +22,77 @@ Site vitrine professionnel pour **MP2A Fermetures** (portails, volets roulants, 
 ### Pages en place
 | Page | État |
 |------|------|
-| `/` (accueil) | ✅ Complète — Hero + Services + Réalisations V3 + CTA Contact |
+| `/` (accueil) | ✅ Complète — Hero + TrustSection + Services + Réalisations V3 + Contact |
 | `/services` | ✅ Complète — bandeau + 6 services + Particuliers/Professionnels + CTA |
-| `/realisations` | ✅ Complète — bandeau + grille vidéos + CTA rouge bas |
-| `/contact` | ✅ Complète — formulaire simulé + sidebar coordonnées |
-| `/avis` | ❌ Supprimée — placeholders trop faux, à recréer avec vrais avis Google |
+| `/realisations` | ✅ Complète — bandeau + grille 6 vidéos + lightbox + CTA rouge bas |
+| `/contact` | ✅ Complète — formulaire Formspree (endpoint placeholder !) + sidebar |
+| `/mentions-legales` | ✅ Créée — 10 sections LCEN 2004, champs manquants balisés `.todo` |
+| `/politique-de-confidentialite` | ✅ Créée — 9 sections RGPD art. 13, tableau données, 6 droits |
+| `/avis` | ❌ Abandonnée définitivement — client n'a pas de Google Business |
 
 ### Composants en place
 | Fichier | État |
 |---------|------|
-| `components/layout/AppHeader.vue` | ✅ Nav desktop + burger mobile, sticky, ligne rouge |
-| `components/layout/AppFooter.vue` | ✅ 3 colonnes, copyright |
-| `components/sections/HeroSection.vue` | ✅ Fond noir dégradé + grille, SVG icons, badge Artisan Certifié doré, Click-to-Call |
-| `components/sections/ServicesSection.vue` | ✅ 6 services, prop `preview` |
-| `components/sections/RealisationsSection.vue` | ✅ **V3 premium** — voir détails ci-dessous |
-| `components/sections/ContactSection.vue` | ✅ Formulaire simulé + infos |
+| `components/layout/AppHeader.vue` | ✅ Sticky blanc, logo icon+text, nav desktop, burger mobile — les 2 numéros affichés dans le menu burger |
+| `components/layout/AppFooter.vue` | ✅ Fond anthracite, 3 colonnes, badges SVG légaux, liens /mentions-legales et /politique |
+| `components/sections/HeroSection.vue` | ✅ Photo `hero-villa.jpg` + overlay + gate CSS + parallax + badges 3 colonnes mobile |
+| `components/sections/TrustSection.vue` | ✅ 4 stats animées + 7 marques partenaires |
+| `components/sections/ServicesSection.vue` | ✅ 6 services, prop `preview`, animations scroll v-motion, prefers-reduced-motion |
+| `components/sections/RealisationsSection.vue` | ✅ Grille éditoriale accueil + grille 6 vidéos page complète, lightbox image+vidéo, zoom hover, animations scroll v-motion |
+| `components/sections/ContactSection.vue` | ✅ Formspree réel (endpoint XXXXXXXX à remplacer !), mention RGPD, hasError secours |
 
 ### Médias en place
 | Fichier | Emplacement | Usage |
 |---------|------------|-------|
-| `sav-depannage-motorisation.jpg` | `public/images/` | Accueil (homepage) |
-| `realisation-portail-industriel.jpg` | `public/images/` | Accueil (homepage) |
-| `realisation-portail-coulissant.jpg` | `public/images/` | Accueil (homepage) |
-| `realisation-portes-garage-parking.jpg` | `public/images/` | Accueil (homepage) |
+| `hero-villa.jpg` | `public/` | Fond hero section accueil |
+| `logo-icon.png` | `public/` | Partie icône du logo (header) |
+| `logo-text.png` | `public/` | Partie texte du logo — `filter: brightness(0)` pour fond blanc |
+| `logo-white.png` | `public/` | Logo blanc complet (footer) |
+| `favicon.svg` | `public/` | Favicon MP2A + FERMETURES fond rouge |
+| `robots.txt` | `public/` | Allow: / + Sitemap: https://mp2afermetures.fr/sitemap.xml |
+| `sav-depannage-motorisation.jpg` | `public/images/` | Réalisations accueil |
+| `realisation-portail-industriel.jpg` | `public/images/` | Réalisations accueil |
+| `realisation-portail-coulissant.jpg` | `public/images/` | Réalisations accueil |
+| `realisation-portes-garage-parking.jpg` | `public/images/` | Réalisations accueil |
 | `portail-coulissant-serigraphie.mp4` | `public/videos/` | Page /réalisations |
 | `porte-garage-basculante-sinetik.mp4` | `public/videos/` | Page /réalisations |
 | `portail-battant-sinetik-clinique-nice.mp4` | `public/videos/` | Page /réalisations |
 | `remplacement-porte-basculante-sinetik.mp4` | `public/videos/` | Page /réalisations |
 | `remplacement-montants-porte-garage-doitrand.mp4` | `public/videos/` | Page /réalisations |
-| `hero-bg.jpg` | `public/` | Non utilisé en fond hero (client n'aimait pas le rendu) |
-
----
-
-## Détail — RealisationsSection V3 (fichier le plus travaillé)
-
-### Architecture des données
-Chaque item a un flag `homepage: true` (accueil) ou sans flag (page /réalisations) :
-- `displayedItems` = filtre `r.homepage` si `preview`, sinon `!r.homepage`
-- **0 doublon** entre accueil et page réalisations
-
-### Layout V3 (desktop 1024px+)
-```
-[ Photo 1 — héro large (2 cols) ] [ Photo 2 — tall right ]
-[ Photo 3 — petite bas gauche  ] [ Photo 4 — petite bas ]
-```
-Grid : `grid-template-columns: 2fr 1fr 1.5fr` / `grid-template-rows: 330px 250px` / `gap: 2px`
-
-### Éléments V3 appliqués
-- **Numéros filigrane** : 96px, `rgba(255,255,255,0.06)`, z-index 1 (derrière l'overlay)
-- **Hover** : `box-shadow inset 0 0 0 2px var(--color-red)` + `scale(1.04)`
-- **Accent item 1** : barre rouge top full-width (`::before` horizontal)
-- **CTA "Voir tout"** : bouton outliné rouge, fill rouge au hover
-- **Header** : 260px sticky, numéro décoratif "04" fond 4% opacité
-- **Localisation** : point rouge + lieu sous chaque titre photo
-- **Overlay gradient** : sombre uniquement bas 40% (cinématique)
+| `barrieres-bft-maxima-ultra-68.mp4` | `public/videos/` | Page /réalisations |
 
 ---
 
 ## Ce qui a changé depuis le début
 
 ### Session 1 (2026-06-15)
-1. Architecture Nuxt 3 complète
-2. Variables CSS globales (couleurs, typo, espacements)
-3. AppHeader + AppFooter
-4. HeroSection V1 (fond noir, slogan, CTAs, badges)
-5. ServicesSection (6 services, prop preview)
-6. ContactSection (formulaire + sidebar)
-7. Pages /services, /contact, /avis
-8. RealisationsSection V1 (2 vidéos + 1 photo)
-9. GitHub repo + GitHub Actions deploy
-10. Fix logos GitHub Pages → plugin `$url()` pour préfixer baseURL
+Architecture Nuxt 3, CSS variables, AppHeader/Footer, Hero V1, Services, Contact, Réalisations V1, GitHub Pages, fix logos baseURL
 
 ### Session 2 (2026-06-16)
-1. HeroSection V2 : Click-to-Call + badge Artisan Certifié doré + SVG icons (tel, checkmark) + ligne rouge sous badges
-2. Fond hero : tentative photo `hero-bg.jpg` → client n'aime pas → fond noir dégradé conservé
-3. RealisationsSection : refonte complète
-   - 4 photos chantiers client (accueil)
-   - 5 vidéos (page /réalisations, 3 nouvelles copiées depuis Téléchargements)
-   - Séparation accueil / réalisations sans doublons
-   - Carousel horizontal auto-scroll → abandonné (design trop commun)
-   - Design V1 (2×2 uniforme) → V2 (L-shape héro) → **V3 agency premium** (final)
-4. Page /realisations complétée (bandeau + grille + CTA)
-5. Page /avis supprimée (à refaire avec vrais avis)
-6. Commit + push master → déploiement GitHub Actions déclenché
+Hero V2 (Click-to-Call, badge doré), RealisationsSection V3 (grille éditoriale), page /realisations complète, /avis abandonnée, push master
+
+### Session 3 (2026-06-17) — audit UI/UX + responsive + légal
+1. **Audit UI/UX Pro Max** → 7 corrections toutes appliquées
+2. **Palette** : ajout anthracite/aluminium, variables sémantiques, rayons réduits (2–4px)
+3. **Header** : blanc + logo composé (icon + text + filter:brightness(0)), 72px→108px
+4. **Hero** : photo `hero-villa.jpg`, parallax JS synchronisé CSS (base 70%), gate CSS pure, badges grille mobile
+5. **TrustSection** créée et insérée dans `pages/index.vue`
+6. **Pages légales** : /mentions-legales + /politique-de-confidentialite
+7. **Footer** : fond anthracite, badges SVG, liens légaux
+8. **ContactSection** : Formspree réel, RGPD, hasError secours téléphone
+9. **Responsive complet** : 0 scroll horizontal validé sur toutes les pages
+
+### Session 4 (2026-06-17) — SEO + animations + lightbox vidéo
+1. **Fix burger mobile** : les 2 numéros (Anthony + Alexandre) affichés dans le menu
+2. **Audit SEO** : score 6/10 → 8.5/10
+3. **Open Graph** : og:title, og:description, og:image, og:url sur les 4 pages
+4. **JSON-LD LocalBusiness** : schema.org sur l'accueil (adresse, tél, zone, Instagram)
+5. **robots.txt** créé
+6. **Favicon SVG** : fond rouge, "MP2A" + "FERMETURES"
+7. **Animations scroll v-motion** : RealisationsSection header + items (stagger 80-90ms)
+8. **Zoom hover** : scale(1.04) sur items galerie accueil, scale(1.03) sur cards /realisations
+9. **Lightbox vidéo** : page /realisations — clic sur card → lightbox avec vidéo autoplay + controls + navigation
+10. **Nouvelle réalisation** : barrières BFT Maxima Ultra 68 (`barrieres-bft-maxima-ultra-68.mp4`)
 
 ---
 
@@ -111,36 +100,35 @@ Grid : `grid-template-columns: 2fr 1fr 1.5fr` / `grid-template-rows: 330px 250px
 
 | Tentative | Résultat | Raison |
 |-----------|----------|--------|
-| Animation intro GSAP (portail qui s'ouvre) | ❌ Abandonnée | `requestAnimationFrame` throttlé dans l'onglet preview → GSAP ne se déclenchait pas. Problème de positionnement CSS. Décision : supprimée définitivement. |
-| `import('gsap')` dynamique | ❌ Échoué | Erreur dans le contexte eval. |
-| Logo sur GitHub Pages | ❌ Invisible | `/logo.png` ne préfixe pas `/mp2a-fermetures/`. Résolu via plugin `$url()`. |
-| Script `nuxt generate` manquant | ❌ CI cassé | `package.json` n'avait pas de script `generate`. Ajouté. |
-| GitHub Pages API → 409 | ❌ Conflit | Corrigé en passant PUT `build_type: workflow`. |
-| Photo `hero-bg.jpg` en fond hero | ⚠️ Rejeté | Client n'aime pas le rendu. Fond noir dégradé + grille conservé. |
-| Carousel horizontal (accueil) | ⚠️ Rejeté | Client n'aimait pas le design. Remplacé par grille éditoriale. |
-| `preview_screenshot` | ❌ Timeout systématique | Les vidéos `autoplay` sur la page bloquent le renderer du preview tool. Contournement : `preview_eval` + `getComputedStyle` pour vérifier. |
-| HMR color caching | ⚠️ Partiel | Après modification CSS, `getComputedStyle` renvoyait l'ancienne valeur. Résolu par `window.location.reload()`. |
+| Animation intro GSAP | ❌ Abandonnée | requestAnimationFrame throttlé dans preview, problèmes CSS. Remplacé par gate CSS pure. |
+| Photo `hero-bg.jpg` en fond | ⚠️ Rejeté | Client n'aime pas le rendu. Remplacé par `hero-villa.jpg`. |
+| Carousel horizontal accueil | ⚠️ Rejeté | Client n'aimait pas. Remplacé par grille éditoriale V3. |
+| `gh pr create` master→master | ❌ Impossible | Repo single-branch. Push direct sur origin/master. |
+| `preview_screenshot` | ❌ Timeout | Vidéos autoplay bloquent le renderer. Contournement : `preview_eval + getComputedStyle`. |
+| Logo sur header blanc | ❌ Invisible | Logo blanc conçu pour fond sombre. Résolu : logo-icon + logo-text + brightness(0). |
+| IntersectionObserver v-motion en preview | ❌ Ne se déclenche pas | Renderer headless ne simule pas le scroll. Fonctionne dans un vrai navigateur. |
 
 ---
 
 ## Ce qu'il reste à faire
 
-### Priorité haute
-1. **Page /avis** — Recréer avec vrais avis Google (récupérer lien "Laisser un avis" MP2A, screenshot ou texte des avis existants). Minimum 5-6 avis réels.
-2. **Fond hero** — Retravailler avec le client : qu'est-ce qu'il n'aime pas dans `hero-bg.jpg` ? (overlay trop sombre ? trop clair ? mauvais cadrage ?) Alternatives : photo recadrée, filtre couleur rouge/noir, image différente.
-3. **Formulaire contact réel** — Remplacer la simulation par Formspree (`https://formspree.io`) ou Netlify Forms. Le formulaire actuel n'envoie rien.
+### CRITIQUE — Bloquant avant mise en production
+1. **Formspree endpoint** : Remplacer `XXXXXXXX` dans `components/sections/ContactSection.vue` (ligne ~31) par le vrai ID (créer compte formspree.io → nouveau formulaire → copier l'ID)
+2. **Mentions légales — champs manquants** (`.todo` en rouge italique dans `pages/mentions-legales.vue`) :
+   - Forme juridique (SARL ? SAS ? Auto-entrepreneur ?)
+   - Numéro SIRET / SIREN
+   - Numéro Répertoire des Métiers
+   - Capital social (si applicable)
+   - Nom assureur décennale + numéro de contrat
+   - Médiateur de la consommation (nom + site web)
+3. **Déploiement Hostinger** : `npm run generate` → upload FTP vers `public_html`
 
 ### Priorité moyenne
-4. **Médias supplémentaires** — Autres photos/vidéos Instagram à intégrer (télécharger via SnapSave → `public/`)
-5. **Animations scroll** — @vueuse/motion sur les sections quand elles entrent en vue (client avait dit "on verra plus tard")
-6. **SEO** — Vérifier les meta descriptions de chaque page, ajouter sitemap XML (`@nuxtjs/sitemap`)
-7. **Déploiement Hostinger** — `nuxt generate` → upload FTP sur `public_html`. À faire quand le client valide le design.
-
-### Décisions en attente du client
-- Que changer dans le hero avec photo ? (demander)
-- Vrai lien Google Reviews MP2A à récupérer pour /avis
-- Valider le design V3 réalisations en conditions réelles (avec vraies photos)
-- Confirmer si l'animation GSAP portail est définitivement abandonnée
+4. **Google My Business** — créer et valider la fiche (crucial pour référencement local "portail 06")
+5. **Canonical tags** — prévenir le duplicate content
+6. **preload="metadata"** sur les vidéos de /realisations (performance)
+7. Test iOS Safari (`100svh` vs barre d'adresse variable)
+8. Test gate animation en navigation réelle sur device
 
 ---
 
@@ -148,9 +136,12 @@ Grid : `grid-template-columns: 2fr 1fr 1.5fr` / `grid-template-rows: 330px 250px
 
 - **Toujours `$url('/fichier')`** pour les assets publics (plugin `plugins/url.js` pour GitHub Pages baseURL)
 - **`components.pathPrefix: false`** dans `nuxt.config` — pas de préfixe de dossier dans les imports
-- **Typo** : `--font-display: 'Big Shoulders Display'` (titres) + `--font-body: 'DM Sans'` (corps)
-- **Couleurs** : `--color-red: #E30613` | `--color-black: #0A0A0A` | `--color-white: #FFFFFF`
-- **Breakpoints** : sm 480px / md 768px / lg 1024px / xl 1280px
 - **Dev server** : `npm run dev` → `localhost:3000`
+- **Build** : `npm run generate` → dossier `.output/public/`
 - **GitHub Pages** : `NUXT_APP_BASE_URL=/mp2a-fermetures/` dans le workflow CI
-- **`preview_screenshot` timeout** : bug connu lié aux vidéos autoplay. Utiliser `preview_eval + getComputedStyle` pour vérifier le CSS, et `computer-use screenshot` pour voir Chrome.
+- **Typo** : `--font-display: 'Big Shoulders Display'` (titres) + `--font-body: 'DM Sans'` (corps)
+- **Couleurs clés** : `--color-red: #E30613` | `--color-black: #0A0A0A` | `--color-anthracite: #1E2229` | `--color-aluminium: #F3F4F6`
+- **Breakpoints** : sm 480px / md 768px / lg 1024px / xl 1280px
+- **Page /avis** : ne pas recréer — décision définitive du client
+- **SessionStorage** : clé `mp2a-gate-played` pour l'animation gate
+- **lightboxItems** (computed) = tous les displayedItems — navigable image ET vidéo
