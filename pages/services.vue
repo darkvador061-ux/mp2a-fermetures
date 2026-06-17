@@ -7,6 +7,14 @@ useHead({
       content:
         'Installation, motorisation et dépannage de portails, volets roulants, portes de garage et contrôles d\'accès dans les Alpes-Maritimes (06). Devis gratuit.',
     },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:url', content: 'https://mp2afermetures.fr/services' },
+    { property: 'og:title', content: 'Nos Services — Portails, Volets, Portes de Garage | MP2A Fermetures' },
+    { property: 'og:description', content: 'Installation, motorisation et dépannage de portails, volets roulants, portes de garage et contrôles d\'accès dans les Alpes-Maritimes (06). Devis gratuit.' },
+    { property: 'og:image', content: 'https://mp2afermetures.fr/hero-villa.jpg' },
+    { property: 'og:locale', content: 'fr_FR' },
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:image', content: 'https://mp2afermetures.fr/hero-villa.jpg' },
   ],
 })
 </script>
