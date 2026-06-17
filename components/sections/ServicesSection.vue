@@ -253,4 +253,13 @@ const services = [
   background-color: var(--color-black);
   color: var(--color-white);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .services__card {
+    transition: none;
+  }
+  .services__card:hover {
+    transform: none;
+  }
+}
 </style>

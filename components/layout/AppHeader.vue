@@ -31,7 +31,8 @@ const links = [
 
       <!-- Logo -->
       <NuxtLink to="/" class="header__logo" aria-label="MP2A Fermetures — Accueil">
-        <img :src="$url('/logo-header.png')" alt="MP2A Fermetures" class="header__logo-img" />
+        <img :src="$url('/logo-icon.png')" alt="" class="header__logo-icon" aria-hidden="true" />
+        <img :src="$url('/logo-text.png')" alt="MP2A Fermetures" class="header__logo-text" />
       </NuxtLink>
 
       <!-- Nav desktop -->
@@ -98,8 +99,9 @@ const links = [
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
-  background-color: var(--color-black);
-  border-bottom: 2px solid var(--color-red);
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 8px rgba(0,0,0,.06);
 }
 
 .header__inner {
@@ -107,19 +109,33 @@ const links = [
   align-items: center;
   justify-content: space-between;
   gap: var(--space-6);
-  height: 88px;
+  height: 72px;
 }
 
 /* ── Logo ── */
 .header__logo {
   display: flex;
   align-items: center;
+  gap: 8px;
   flex-shrink: 0;
 }
 
-.header__logo-img {
-  height: 56px;
+.header__logo-icon {
+  height: 44px;
   width: auto;
+}
+
+.header__logo-text {
+  height: 28px;
+  width: auto;
+  filter: brightness(0);
+}
+
+@media (min-width: 1024px) {
+  .header__inner { height: 108px; }
+  .header__logo { gap: 10px; }
+  .header__logo-icon { height: 68px; }
+  .header__logo-text { height: 42px; }
 }
 
 /* ── Nav desktop ── */
@@ -136,18 +152,18 @@ const links = [
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 500;
-  color: var(--color-grey);
+  color: var(--color-anthracite);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   transition: color var(--transition-fast);
   position: relative;
-  padding-bottom: 2px;
+  padding-bottom: 4px;
 }
 
 .header__nav-list a::after {
   content: '';
   position: absolute;
-  bottom: -2px;
+  bottom: -4px;
   left: 0;
   width: 0;
   height: 2px;
@@ -156,7 +172,7 @@ const links = [
 }
 
 .header__nav-list a:hover {
-  color: var(--color-white);
+  color: var(--color-red);
 }
 
 .header__nav-list a:hover::after,
@@ -165,7 +181,8 @@ const links = [
 }
 
 .header__nav-list a.router-link-exact-active {
-  color: var(--color-white);
+  color: var(--color-anthracite);
+  font-weight: 700;
 }
 
 /* ── CTA desktop ── */
@@ -206,8 +223,8 @@ const links = [
   display: block;
   width: 100%;
   height: 2px;
-  background-color: var(--color-white);
-  border-radius: 2px;
+  background-color: var(--color-anthracite);
+  border-radius: 0;
   transition: transform var(--transition-base), opacity var(--transition-base);
   transform-origin: center;
 }
@@ -226,13 +243,13 @@ const links = [
 /* ── Menu mobile ── */
 .header__mobile {
   position: fixed;
-  inset: 90px 0 0 0;
-  background-color: var(--color-black);
+  inset: 72px 0 0 0;
+  background-color: var(--color-white);
   display: flex;
   flex-direction: column;
   padding: var(--space-8) var(--space-6);
   gap: var(--space-6);
-  border-top: 1px solid var(--color-grey-dark);
+  border-top: 1px solid var(--border);
   overflow-y: auto;
 }
 
@@ -246,14 +263,14 @@ const links = [
   font-family: var(--font-display);
   font-size: 2.5rem;
   font-weight: 900;
-  color: var(--color-grey);
+  color: var(--color-anthracite);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   line-height: 1.2;
   transition: color var(--transition-fast);
   display: block;
   padding-block: var(--space-2);
-  border-bottom: 1px solid var(--color-grey-dark);
+  border-bottom: 1px solid var(--border);
 }
 
 .header__mobile-list a:hover,
@@ -290,7 +307,7 @@ const links = [
 }
 
 .header__mobile-phone:hover {
-  color: var(--color-white);
+  color: var(--color-anthracite);
 }
 
 /* ── Transition menu ── */

@@ -14,7 +14,9 @@
   --color-red-dark:   #B5040F;
   --color-red-light:  #FF1A28;
   --color-black:      #0A0A0A;
+  --color-anthracite: #1E2229;
   --color-white:      #FFFFFF;
+  --color-aluminium:  #F3F4F6;
   --color-grey-light: #F5F5F5;
   --color-grey:       #D0D0D0;
   --color-grey-mid:   #8A8A8A;
@@ -22,15 +24,15 @@
 
   /* Sémantique */
   --bg:               var(--color-white);
-  --bg-alt:           var(--color-grey-light);
-  --bg-dark:          var(--color-black);
-  --text:             var(--color-black);
+  --bg-alt:           var(--color-aluminium);
+  --bg-dark:          var(--color-anthracite);
+  --text:             var(--color-anthracite);
   --text-muted:       var(--color-grey-mid);
   --text-on-dark:     var(--color-white);
   --accent:           var(--color-red);
   --accent-hover:     var(--color-red-dark);
-  --border:           var(--color-grey);
-  --border-dark:      var(--color-grey-dark);
+  --border:           #E2E4E8;
+  --border-dark:      rgba(255,255,255,0.10);
 
   /* Typographie */
   --font-body:        'DM Sans', system-ui, sans-serif;
@@ -68,10 +70,10 @@
   --container-max:  1280px;
   --container-pad:  var(--space-4);
 
-  /* Rayons */
-  --radius-sm:   4px;
-  --radius-md:   8px;
-  --radius-lg:   16px;
+  /* Rayons — angles droits, premium */
+  --radius-sm:   2px;
+  --radius-md:   3px;
+  --radius-lg:   4px;
   --radius-full: 9999px;
 
   /* Ombres */

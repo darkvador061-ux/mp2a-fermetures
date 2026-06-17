@@ -4,6 +4,12 @@
       <div class="hero__overlay"></div>
     </div>
 
+    <!-- Animation portail — panneaux anthracite qui s'écartent -->
+    <template v-if="showGate">
+      <div class="hero__gate hero__gate--left" :class="{ 'is-open': gateOpen }" aria-hidden="true"></div>
+      <div class="hero__gate hero__gate--right" :class="{ 'is-open': gateOpen }" aria-hidden="true"></div>
+    </template>
+
     <div class="container hero__content">
       <p class="hero__eyebrow">Portails · Volets · Portes de garage · Clôtures</p>
 
@@ -64,14 +70,36 @@ function onScroll() {
   if (rafId) return
   rafId = requestAnimationFrame(() => {
     if (heroBg.value) {
-      const pct = 50 + window.scrollY * 0.018
+      const pct = 70 + window.scrollY * 0.018
       heroBg.value.style.backgroundPositionY = `${pct}%`
     }
     rafId = null
   })
 }
 
-onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
+// Animation portail
+const showGate = ref(false)
+const gateOpen = ref(false)
+
+onMounted(() => {
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  if (!reducedMotion) {
+    window.addEventListener('scroll', onScroll, { passive: true })
+    if (heroBg.value) {
+      heroBg.value.style.backgroundPositionY = `${70 + window.scrollY * 0.018}%`
+    }
+  }
+
+  // Animation portail — une seule fois par session, désactivée si reduced-motion
+  const alreadyPlayed = sessionStorage.getItem('mp2a-gate-played')
+  if (!alreadyPlayed && !reducedMotion) {
+    showGate.value = true
+    sessionStorage.setItem('mp2a-gate-played', '1')
+    setTimeout(() => { gateOpen.value = true }, 300)
+  }
+})
+
 onUnmounted(() => window.removeEventListener('scroll', onScroll))
 </script>
 
@@ -79,7 +107,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 /* ── Hero ── */
 .hero {
   position: relative;
-  min-height: 100svh;
+  min-height: 80svh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -88,14 +116,28 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   overflow: hidden;
 }
 
+@media (min-width: 1024px) {
+  .hero {
+    min-height: 100svh;
+  }
+}
+
 /* ── Fond photo ── */
 .hero__bg {
   position: absolute;
   inset: 0;
   background-image: url('/hero-villa.jpg');
   background-size: cover;
-  background-position: center 50%;
+  background-position: center 60%;
+  background-repeat: no-repeat;
   will-change: background-position-y;
+}
+
+@media (min-width: 1024px) {
+  .hero__bg {
+    background-size: 140%;
+    background-position: center 70%;
+  }
 }
 
 .hero__overlay {
@@ -339,6 +381,52 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 @media (min-width: 768px) {
   .hero__scroll {
     display: flex;
+  }
+}
+
+/* ── Animation portail ── */
+.hero__gate {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background-color: var(--color-anthracite);
+  z-index: 3;
+  transition: transform 1.4s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: transform;
+}
+
+.hero__gate--left  { left: 0;  transform: translateX(0); }
+.hero__gate--right { right: 0; transform: translateX(0); }
+
+.hero__gate--left.is-open  { transform: translateX(-100%); }
+.hero__gate--right.is-open { transform: translateX(100%); }
+
+@media (max-width: 479px) {
+  .hero__badge-sep {
+    display: none;
+  }
+  .hero__badges {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+    width: 100%;
+  }
+  .hero__badge {
+    align-items: center;
+  }
+  .hero__badge span {
+    font-size: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__gate {
+    transition: none;
+  }
+  .hero__scroll-line {
+    animation: none;
+    opacity: 0.5;
   }
 }
 </style>

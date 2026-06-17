@@ -48,9 +48,23 @@ useHead({
 .page-banner {
   background-color: var(--color-black);
   color: var(--color-white);
-  padding-block: var(--space-20);
-  padding-top: calc(var(--space-20) + 88px);
+  padding-top: var(--space-10);
+  padding-bottom: var(--space-8);
   border-bottom: 3px solid var(--color-red);
+}
+
+@media (min-width: 768px) {
+  .page-banner {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-12);
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-banner {
+    padding-top: calc(var(--space-20) + 88px);
+    padding-bottom: var(--space-20);
+  }
 }
 
 .page-banner__content {

@@ -13,6 +13,8 @@
           <li><NuxtLink to="/services">Services</NuxtLink></li>
           <li><NuxtLink to="/realisations">Réalisations</NuxtLink></li>
           <li><NuxtLink to="/contact">Contact & Devis</NuxtLink></li>
+          <li><NuxtLink to="/mentions-legales">Mentions légales</NuxtLink></li>
+          <li><NuxtLink to="/politique-de-confidentialite">Politique de confidentialité</NuxtLink></li>
         </ul>
       </nav>
 
@@ -24,10 +26,33 @@
       </div>
     </div>
 
+    <div class="footer__legal-bar">
+      <div class="container">
+        <span class="footer__legal-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Assurance décennale souscrite
+        </span>
+        <span class="footer__legal-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Devis gratuit sans engagement
+        </span>
+        <span class="footer__legal-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Intervention rapide 06
+        </span>
+      </div>
+    </div>
+
     <div class="footer__bottom">
       <div class="container">
         <p>© {{ new Date().getFullYear() }} MP2A Fermetures — Tous droits réservés</p>
-        <a href="https://www.instagram.com/mp2afermetures" target="_blank" rel="noopener noreferrer" aria-label="Instagram MP2A Fermetures">Instagram</a>
+        <div class="footer__bottom-links">
+          <NuxtLink to="/mentions-legales">Mentions légales</NuxtLink>
+          <span aria-hidden="true">·</span>
+          <NuxtLink to="/politique-de-confidentialite">Confidentialité</NuxtLink>
+          <span aria-hidden="true">·</span>
+          <a href="https://www.instagram.com/mp2afermetures" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -35,7 +60,7 @@
 
 <style scoped>
 .footer {
-  background-color: var(--color-black);
+  background-color: var(--color-anthracite);
   color: var(--color-grey);
   margin-top: auto;
 }
@@ -114,10 +139,38 @@
   color: var(--color-red);
 }
 
+/* Barre badges légaux */
+.footer__legal-bar {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-block: var(--space-4);
+}
+
+.footer__legal-bar .container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+}
+
+.footer__legal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.04em;
+}
+
+.footer__legal-badge svg {
+  color: var(--color-red);
+  flex-shrink: 0;
+}
+
 /* Bottom bar */
 .footer__bottom {
-  border-top: 1px solid var(--color-grey-dark);
-  padding-block: var(--space-5);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-block: var(--space-4);
 }
 
 .footer__bottom .container {
@@ -129,12 +182,24 @@
 }
 
 .footer__bottom p,
-.footer__bottom a {
+.footer__bottom-links a {
   font-size: var(--text-xs);
   color: var(--color-grey-mid);
 }
 
-.footer__bottom a:hover {
+.footer__bottom-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,0.25);
+}
+
+.footer__bottom-links a {
+  transition: color var(--transition-fast);
+}
+
+.footer__bottom-links a:hover {
   color: var(--color-red);
 }
 </style>

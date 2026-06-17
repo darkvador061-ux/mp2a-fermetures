@@ -11,6 +11,7 @@ const form = ref({
 
 const submitted = ref(false)
 const sending = ref(false)
+const hasError = ref(false)
 
 const typesService = [
   'Portail',
@@ -25,10 +26,23 @@ const typesService = [
 
 async function handleSubmit() {
   sending.value = true
-  // Simulation envoi — à remplacer par l'appel API réel
-  await new Promise(r => setTimeout(r, 800))
-  sending.value = false
-  submitted.value = true
+  hasError.value = false
+  try {
+    const res = await fetch('https://formspree.io/f/XXXXXXXX', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(form.value)
+    })
+    if (res.ok) {
+      submitted.value = true
+    } else {
+      hasError.value = true
+    }
+  } catch {
+    hasError.value = true
+  } finally {
+    sending.value = false
+  }
 }
 </script>
 
@@ -121,6 +135,15 @@ async function handleSubmit() {
               <span v-if="!sending">Envoyer ma demande</span>
               <span v-else>Envoi en cours…</span>
             </button>
+
+            <p v-if="hasError" class="contact__error">
+              Une erreur est survenue. Appelez-nous directement au 06 98 25 89 37.
+            </p>
+
+            <p class="contact__rgpd">
+              Vos données sont utilisées uniquement pour répondre à votre demande de devis. Aucune utilisation commerciale.
+              <NuxtLink to="/politique-de-confidentialite">En savoir plus</NuxtLink>
+            </p>
           </form>
 
           <!-- Confirmation -->
@@ -315,6 +338,33 @@ async function handleSubmit() {
 .contact__submit:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.contact__error {
+  font-size: var(--text-sm);
+  color: var(--color-red);
+  font-weight: 600;
+  max-width: none;
+  margin-top: calc(-1 * var(--space-2));
+}
+
+.contact__rgpd {
+  font-size: var(--text-xs);
+  color: var(--color-grey-mid);
+  line-height: 1.6;
+  max-width: none;
+  margin-top: calc(-1 * var(--space-2));
+}
+
+.contact__rgpd a {
+  color: var(--color-grey-mid);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--transition-fast);
+}
+
+.contact__rgpd a:hover {
+  color: var(--color-red);
 }
 
 /* ── Succès ── */

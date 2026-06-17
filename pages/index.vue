@@ -14,6 +14,7 @@ useHead({
 <template>
   <div>
     <HeroSection />
+    <TrustSection />
     <ServicesSection />
     <RealisationsSection />
     <ContactSection />
