@@ -90,14 +90,11 @@ const displayedItems = computed(() =>
     : realisations.filter(r => !r.homepage)
 )
 
-const lightboxImages = computed(() =>
-  displayedItems.value.filter(r => r.type === 'image')
-)
+const lightboxItems = computed(() => displayedItems.value)
 
 const lightboxItem = ref(null)
 
 function openLightbox(item) {
-  if (item.type !== 'image') return
   lightboxItem.value = item
   if (typeof document !== 'undefined') document.body.style.overflow = 'hidden'
 }
@@ -108,14 +105,14 @@ function closeLightbox() {
 }
 
 function navigate(dir) {
-  const items = lightboxImages.value
+  const items = lightboxItems.value
   const idx = items.findIndex(i => i.src === lightboxItem.value.src)
   const next = items[idx + dir]
   if (next) lightboxItem.value = next
 }
 
 function currentIndex() {
-  return lightboxImages.value.findIndex(i => i.src === lightboxItem.value?.src)
+  return lightboxItems.value.findIndex(i => i.src === lightboxItem.value?.src)
 }
 
 function handleKey(e) {
@@ -138,7 +135,12 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
     <div class="realisations__inner">
 
       <!-- En-tête latéral (desktop) -->
-      <div class="realisations__header">
+      <div
+        class="realisations__header"
+        v-motion
+        :initial="{ opacity: 0, y: 30 }"
+        :visible-once="{ opacity: 1, y: 0, transition: { duration: 600 } }"
+      >
         <span class="realisations__header-deco" aria-hidden="true">04</span>
         <p class="realisations__eyebrow">Nos chantiers</p>
         <h2 class="realisations__title">Nos<br>réalisations</h2>
@@ -158,6 +160,9 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
           :key="i"
           class="realisations__item"
           :class="`realisations__item--${i + 1}`"
+          v-motion
+          :initial="{ opacity: 0, y: 24 }"
+          :visible-once="{ opacity: 1, y: 0, transition: { duration: 500, delay: i * 90 } }"
           @click="openLightbox(r)"
           role="button"
           :aria-label="`Agrandir : ${r.titre}`"
@@ -190,6 +195,14 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
           v-for="(r, i) in displayedItems"
           :key="i"
           class="realisations__card"
+          v-motion
+          :initial="{ opacity: 0, y: 30 }"
+          :visible-once="{ opacity: 1, y: 0, transition: { duration: 500, delay: i * 80 } }"
+          role="button"
+          tabindex="0"
+          :aria-label="`Ouvrir : ${r.titre}`"
+          @click="openLightbox(r)"
+          @keydown.enter="openLightbox(r)"
         >
           <div class="realisations__media">
             <video
@@ -248,7 +261,7 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
           v-if="currentIndex() > 0"
           class="lightbox__nav lightbox__prev"
           @click="navigate(-1)"
-          aria-label="Photo précédente"
+          aria-label="Élément précédent"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <polyline points="15 18 9 12 15 6"/>
@@ -258,8 +271,21 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
         <!-- Contenu -->
         <div class="lightbox__content">
           <Transition name="lb-img" mode="out-in">
-            <img
+            <video
+              v-if="lightboxItem.type === 'video'"
               :key="lightboxItem.src"
+              :src="$url(lightboxItem.src)"
+              class="lightbox__img"
+              autoplay
+              muted
+              loop
+              playsinline
+              controls
+              :aria-label="lightboxItem.titre"
+            />
+            <img
+              v-else
+              :key="lightboxItem.src + '-img'"
               :src="$url(lightboxItem.src)"
               :alt="lightboxItem.titre"
               class="lightbox__img"
@@ -277,10 +303,10 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
 
         <!-- Suivant -->
         <button
-          v-if="currentIndex() < lightboxImages.length - 1"
+          v-if="currentIndex() < lightboxItems.length - 1"
           class="lightbox__nav lightbox__next"
           @click="navigate(1)"
-          aria-label="Photo suivante"
+          aria-label="Élément suivant"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <polyline points="9 18 15 12 9 6"/>
@@ -289,7 +315,7 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
 
         <!-- Compteur -->
         <div class="lightbox__counter" aria-live="polite">
-          {{ currentIndex() + 1 }}<span>/</span>{{ lightboxImages.length }}
+          {{ currentIndex() + 1 }}<span>/</span>{{ lightboxItems.length }}
         </div>
       </div>
     </Transition>
@@ -455,6 +481,13 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
   overflow: hidden;
   cursor: pointer;
   background-color: #111;
+  transition: transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94), z-index 0ms;
+  z-index: 1;
+}
+
+.realisations__item:hover {
+  transform: scale(1.04);
+  z-index: 3;
 }
 
 .realisations__photo {
@@ -466,7 +499,7 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
 }
 
 .realisations__item:hover .realisations__photo {
-  transform: scale(1.04);
+  transform: scale(1.08);
 }
 
 /* Inset border rouge au hover — signature premium */
@@ -627,12 +660,15 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
   border: 1px solid var(--color-grey);
   overflow: hidden;
   cursor: pointer;
-  transition: box-shadow var(--transition-base), transform var(--transition-base);
+  position: relative;
+  z-index: 1;
+  transition: box-shadow var(--transition-base), transform var(--transition-base), z-index 0ms;
 }
 
 .realisations__card:hover {
   box-shadow: var(--shadow-lg);
-  transform: translateY(-3px);
+  transform: scale(1.03);
+  z-index: 2;
 }
 
 .realisations__media {
@@ -695,9 +731,14 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
 
 @media (prefers-reduced-motion: reduce) {
   .realisations__photo,
+  .realisations__item,
   .realisations__item::after,
   .realisations__card {
     transition: none;
+  }
+  .realisations__item:hover,
+  .realisations__card:hover {
+    transform: none;
   }
 }
 
