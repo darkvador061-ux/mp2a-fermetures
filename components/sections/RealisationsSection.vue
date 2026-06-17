@@ -81,6 +81,14 @@ const realisations = [
     titre: 'Porte basculante SINETIK',
     description: 'Porte de garage basculante SINETIK – Groupe Connexion avec portillon attenant.',
     lieu: 'Alpes-Maritimes (06)'
+  },
+  {
+    type: 'video',
+    src: '/videos/barrieres-bft-maxima-ultra-68.mp4',
+    categorie: 'Contrôle d\'accès',
+    titre: '2 barrières BFT Maxima Ultra 68',
+    description: 'Mise en place de 2 barrières BFT Maxima Ultra 68 avec herses hautes et basses.',
+    lieu: 'Alpes-Maritimes (06)'
   }
 ]
 
