@@ -126,6 +126,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 .hero__bg {
   position: absolute;
   inset: 0;
+  background-color: var(--color-black);
   background-image: url('/hero-villa.jpg');
   background-size: cover;
   background-position: center 60%;

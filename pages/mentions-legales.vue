@@ -24,12 +24,15 @@ useHead({
         <h2>1. Éditeur du site</h2>
         <table class="legal__table">
           <tbody>
-            <tr><th>Dénomination</th><td>MP2A Fermetures</td></tr>
-            <tr><th>Forme juridique</th><td class="todo">À compléter (ex : SARL, SAS, Auto-entrepreneur…)</td></tr>
-            <tr><th>Siège social</th><td>Hameau du Canadel, Villa 11, 309 Bd Honoré Teisseire, 06480 La Colle-sur-Loup</td></tr>
-            <tr><th>SIRET</th><td class="todo">À compléter</td></tr>
-            <tr><th>N° Répertoire des Métiers</th><td class="todo">À compléter</td></tr>
-            <tr><th>Capital social</th><td class="todo">À compléter (si applicable)</td></tr>
+            <tr><th>Dénomination</th><td>MP2A FERMETURES</td></tr>
+            <tr><th>Forme juridique</th><td>Société par actions simplifiée (SAS)</td></tr>
+            <tr><th>Siège social</th><td>309 Boulevard Honoré Teisseire, Hameau du Canadel Villa 11, 06480 La Colle-sur-Loup</td></tr>
+            <tr><th>SIREN</th><td>937 858 157</td></tr>
+            <tr><th>SIRET</th><td>937 858 157 00012</td></tr>
+            <tr><th>N° TVA intracommunautaire</th><td>FR49937858157</td></tr>
+            <tr><th>Code APE / NAF</th><td>4332B — Travaux de menuiserie métallique et serrurerie</td></tr>
+            <tr><th>Capital social</th><td>1 000,00 €</td></tr>
+            <tr><th>Date de création</th><td>27 décembre 2024</td></tr>
             <tr><th>Téléphone</th><td>06 98 25 89 37 (Anthony MONTA) — 06 84 23 03 76 (Alexandre AUGUSTE)</td></tr>
             <tr><th>Email</th><td><a href="mailto:contact@mp2afermetures.fr">contact@mp2afermetures.fr</a></td></tr>
           </tbody>
@@ -37,8 +40,13 @@ useHead({
       </section>
 
       <section class="legal__section">
-        <h2>2. Directeur de la publication</h2>
-        <p>Anthony MONTA et Alexandre AUGUSTE, co-gérants de MP2A Fermetures.</p>
+        <h2>2. Directeurs de la publication</h2>
+        <table class="legal__table">
+          <tbody>
+            <tr><th>Président</th><td>Anthony MONTA</td></tr>
+            <tr><th>Directeur général</th><td>Alexandre AUGUSTE</td></tr>
+          </tbody>
+        </table>
       </section>
 
       <section class="legal__section">
