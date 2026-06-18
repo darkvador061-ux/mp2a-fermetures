@@ -10,7 +10,8 @@ const stats = [
 
 const brands = ['Nice', 'Somfy', 'BFT', 'FAAC', 'Cardin', 'CAME', 'Dormakaba']
 
-const counts = ref(stats.map(() => 0))
+const counts = ref(stats.map(s => s.value))
+const numsVisible = ref(false)
 const sectionRef = ref(null)
 const animated = ref(false)
 let observer = null
@@ -26,6 +27,7 @@ function animateCount(index, target, delay = 0) {
       counts.value[index] = Math.round(target * ease)
       if (progress < 1) requestAnimationFrame(tick)
     }
+    counts.value[index] = 0
     requestAnimationFrame(tick)
   }, delay)
 }
@@ -36,7 +38,7 @@ onMounted(() => {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   if (reducedMotion) {
-    stats.forEach((s, i) => { counts.value[i] = s.value })
+    numsVisible.value = true
     return
   }
 
@@ -44,11 +46,12 @@ onMounted(() => {
     (entries) => {
       if (entries[0].isIntersecting && !animated.value) {
         animated.value = true
+        numsVisible.value = true
         stats.forEach((s, i) => animateCount(i, s.value, i * 120))
         observer.disconnect()
       }
     },
-    { threshold: 0.25 }
+    { threshold: 0.2 }
   )
 
   if (sectionRef.value) observer.observe(sectionRef.value)
@@ -69,7 +72,7 @@ onUnmounted(() => observer?.disconnect())
             :key="i"
             class="trust__stat"
           >
-            <strong class="trust__stat-num">
+            <strong class="trust__stat-num" :class="{ 'is-visible': numsVisible }">
               {{ counts[i] }}<span class="trust__stat-suffix">{{ stat.suffix }}</span>
             </strong>
             <span class="trust__stat-label">{{ stat.label }}</span>
@@ -148,6 +151,14 @@ onUnmounted(() => observer?.disconnect())
   display: flex;
   align-items: baseline;
   gap: 2px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.trust__stat-num.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .trust__stat-suffix {
@@ -231,6 +242,9 @@ onUnmounted(() => observer?.disconnect())
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .trust__stat-num {
+    transition: none;
+  }
   .trust__brand {
     transition: none;
   }
