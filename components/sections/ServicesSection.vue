@@ -80,10 +80,12 @@ const services = [
           v-for="(service, index) in services"
           :key="service.id"
           class="services__card"
+          :class="index === 0 ? 'services__card--featured' : ''"
           v-motion
           :initial="{ opacity: 0, y: 40 }"
           :visible-once="{ opacity: 1, y: 0, transition: { duration: 500, delay: index * 70 } }"
         >
+          <span class="services__card-num" aria-hidden="true">{{ String(index + 1).padStart(2, '0') }}</span>
           <div class="services__card-icon" aria-hidden="true" v-html="service.icon"></div>
           <h3 class="services__card-title">{{ service.title }}</h3>
           <p class="services__card-text">
@@ -112,47 +114,51 @@ const services = [
 <style scoped>
 .services {
   padding-block: var(--space-24);
-  background-color: var(--bg);
+  background-color: var(--bg-alt);
   border-bottom: 3px solid var(--color-red);
 }
 
 /* ── En-tête ── */
 .services__header {
-  text-align: center;
+  text-align: left;
   margin-bottom: var(--space-16);
+  border-top: 2px solid var(--color-red);
+  padding-top: var(--space-6);
 }
 
 .services__eyebrow {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-red);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-4);
   max-width: none;
 }
 
 .services__title {
   font-family: var(--font-display);
-  font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+  font-size: clamp(3.5rem, 9vw, 7rem);
   font-weight: 900;
   text-transform: uppercase;
   color: var(--color-black);
-  margin-bottom: var(--space-4);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-6);
 }
 
 .services__intro {
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
   color: var(--color-grey-mid);
-  max-width: 60ch;
-  margin-inline: auto;
+  max-width: 52ch;
+  line-height: 1.6;
 }
 
 /* ── Grille ── */
 .services__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-6);
+  gap: var(--space-4);
 }
 
 @media (min-width: 640px) {
@@ -165,22 +171,48 @@ const services = [
   .services__grid {
     grid-template-columns: repeat(3, 1fr);
   }
+  .services__card--featured {
+    grid-column: 1 / 3;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--space-10);
+  }
+  .services__card--featured .services__card-text {
+    font-size: var(--text-lg);
+  }
 }
 
 /* ── Carte ── */
 .services__card {
+  position: relative;
   padding: var(--space-8);
   border: 1px solid var(--color-grey);
   background-color: var(--color-white);
   transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .services__card:hover {
   border-color: var(--color-red);
   box-shadow: var(--shadow-md);
   transform: translateY(-3px);
+}
+
+/* Numéro décoratif */
+.services__card-num {
+  position: absolute;
+  top: -10px;
+  right: var(--space-4);
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 8vw, 6rem);
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.05);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  pointer-events: none;
+  user-select: none;
 }
 
 .services__card-icon {
@@ -190,25 +222,32 @@ const services = [
   margin-bottom: var(--space-4);
   color: var(--color-red);
   line-height: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .services__card-title {
   font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: 800;
+  font-size: clamp(var(--text-xl), 2.5vw, var(--text-2xl));
+  font-weight: 900;
   text-transform: uppercase;
   color: var(--color-black);
   margin-bottom: var(--space-3);
-  line-height: 1.1;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  position: relative;
+  z-index: 1;
 }
 
 .services__card-text {
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
   color: var(--color-grey-mid);
   line-height: 1.6;
   flex: 1;
   margin-bottom: var(--space-5);
   max-width: none;
+  position: relative;
+  z-index: 1;
 }
 
 .services__card-link {

@@ -129,15 +129,21 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   background-color: var(--color-black);
   background-image: url('/hero-villa.jpg');
   background-size: cover;
-  background-position: center 60%;
+  background-position: center 40%;
   background-repeat: no-repeat;
   will-change: background-position-y;
+}
+
+@media (min-width: 768px) {
+  .hero__bg {
+    background-position: center 30%;
+  }
 }
 
 @media (min-width: 1024px) {
   .hero__bg {
     background-size: 140%;
-    background-position: center 70%;
+    background-position: center 50%;
   }
 }
 
@@ -146,9 +152,9 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(10,10,10,0.55) 0%,
-    rgba(10,10,10,0.45) 50%,
-    rgba(10,10,10,0.80) 100%
+    rgba(10,10,10,0.45) 0%,
+    rgba(10,10,10,0.35) 50%,
+    rgba(10,10,10,0.75) 100%
   );
 }
 
@@ -171,12 +177,12 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 /* Eyebrow */
 .hero__eyebrow {
   font-family: var(--font-body);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-red);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-5);
   max-width: none;
 }
 
@@ -184,15 +190,15 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 .hero__title {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(2rem, 6vw, 4.5rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-size: clamp(3rem, 9vw, 7.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
   color: var(--color-white);
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-8);
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-1);
 }
 
 .hero__title-brand-img {
