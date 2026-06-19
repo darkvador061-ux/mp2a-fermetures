@@ -192,8 +192,8 @@ async function handleSubmit() {
 <style scoped>
 .contact {
   padding-block: var(--space-24);
-  background-color: var(--bg-alt);
-  color: var(--text);
+  background-color: var(--color-black);
+  color: var(--color-white);
 }
 
 /* ── En-tête ── */
@@ -217,12 +217,12 @@ async function handleSubmit() {
   font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
   font-weight: 900;
   text-transform: uppercase;
-  color: var(--color-black);
+  color: var(--color-white);
   margin-bottom: var(--space-4);
 }
 
 .contact__intro {
-  color: var(--color-grey-mid);
+  color: rgba(255,255,255,0.45);
   font-size: var(--text-lg);
   max-width: 55ch;
   margin-inline: auto;
@@ -272,15 +272,15 @@ async function handleSubmit() {
   font-size: var(--text-sm);
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--color-grey-dark);
+  color: rgba(255,255,255,0.6);
   text-transform: uppercase;
 }
 
 .contact__input {
   padding: var(--space-4);
-  background-color: var(--color-white);
-  border: 1px solid var(--color-grey);
-  color: var(--color-black);
+  background-color: #262B33;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--color-white);
   font-size: var(--text-base);
   font-family: var(--font-body);
   transition: border-color var(--transition-base), box-shadow var(--transition-base);
@@ -288,7 +288,7 @@ async function handleSubmit() {
 }
 
 .contact__input::placeholder {
-  color: var(--color-grey-mid);
+  color: rgba(255,255,255,0.3);
 }
 
 .contact__input:focus {
@@ -299,15 +299,15 @@ async function handleSubmit() {
 
 .contact__select {
   cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A8A8A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23aaaaaa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right var(--space-4) center;
   padding-right: var(--space-10);
 }
 
 .contact__select option {
-  background-color: var(--color-white);
-  color: var(--color-black);
+  background-color: #1E2229;
+  color: var(--color-white);
 }
 
 .contact__textarea {
@@ -350,14 +350,14 @@ async function handleSubmit() {
 
 .contact__rgpd {
   font-size: var(--text-xs);
-  color: var(--color-grey-mid);
+  color: rgba(255,255,255,0.3);
   line-height: 1.6;
   max-width: none;
   margin-top: calc(-1 * var(--space-2));
 }
 
 .contact__rgpd a {
-  color: var(--color-grey-mid);
+  color: rgba(255,255,255,0.3);
   text-decoration: underline;
   text-underline-offset: 2px;
   transition: color var(--transition-fast);
@@ -371,8 +371,8 @@ async function handleSubmit() {
 .contact__success {
   text-align: center;
   padding: var(--space-16);
-  border: 1px solid var(--color-grey);
-  background-color: var(--color-white);
+  border: 1px solid rgba(255,255,255,0.08);
+  background-color: #262B33;
 }
 
 .contact__success-icon {
@@ -392,7 +392,7 @@ async function handleSubmit() {
   font-size: var(--text-3xl);
   font-weight: 900;
   text-transform: uppercase;
-  color: var(--color-black);
+  color: var(--color-white);
   margin-bottom: var(--space-3);
 }
 
@@ -423,7 +423,7 @@ async function handleSubmit() {
 .contact__info-link {
   font-size: var(--text-base);
   font-weight: 600;
-  color: var(--color-black);
+  color: var(--color-white);
   transition: color var(--transition-fast);
 }
 
@@ -433,7 +433,7 @@ async function handleSubmit() {
 
 .contact__info-text {
   font-size: var(--text-base);
-  color: var(--color-grey-mid);
+  color: rgba(255,255,255,0.5);
   line-height: 1.7;
   max-width: none;
 }

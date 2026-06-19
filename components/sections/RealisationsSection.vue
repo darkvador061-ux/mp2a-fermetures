@@ -664,17 +664,18 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
 }
 
 .realisations__card {
-  background-color: var(--color-white);
-  border: 1px solid var(--color-grey);
+  background-color: #262B33;
+  border: 1px solid rgba(255,255,255,0.07);
   overflow: hidden;
   cursor: pointer;
   position: relative;
   z-index: 1;
-  transition: box-shadow var(--transition-base), transform var(--transition-base), z-index 0ms;
+  transition: box-shadow var(--transition-base), transform var(--transition-base), border-color var(--transition-base), z-index 0ms;
 }
 
 .realisations__card:hover {
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  border-color: var(--color-red);
   transform: scale(1.03);
   z-index: 2;
 }
@@ -706,13 +707,13 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
   font-size: var(--text-lg);
   font-weight: 800;
   text-transform: uppercase;
-  color: var(--color-black);
+  color: var(--color-white);
   line-height: 1.2;
 }
 
 .realisations__card-desc {
   font-size: var(--text-sm);
-  color: var(--color-grey-mid);
+  color: rgba(255,255,255,0.45);
   max-width: none;
   line-height: 1.5;
 }

@@ -114,7 +114,7 @@ const services = [
 <style scoped>
 .services {
   padding-block: var(--space-24);
-  background-color: var(--bg-alt);
+  background-color: #1E2229;
   border-bottom: 3px solid var(--color-red);
 }
 
@@ -141,7 +141,7 @@ const services = [
   font-size: clamp(3.5rem, 9vw, 7rem);
   font-weight: 900;
   text-transform: uppercase;
-  color: var(--color-black);
+  color: var(--color-white);
   line-height: 0.92;
   letter-spacing: -0.03em;
   margin-bottom: var(--space-6);
@@ -149,7 +149,7 @@ const services = [
 
 .services__intro {
   font-size: var(--text-base);
-  color: var(--color-grey-mid);
+  color: rgba(255,255,255,0.45);
   max-width: 52ch;
   line-height: 1.6;
 }
@@ -186,8 +186,8 @@ const services = [
 .services__card {
   position: relative;
   padding: var(--space-8);
-  border: 1px solid var(--color-grey);
-  background-color: var(--color-white);
+  border: 1px solid rgba(255,255,255,0.07);
+  background-color: #262B33;
   transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
   display: flex;
   flex-direction: column;
@@ -196,7 +196,7 @@ const services = [
 
 .services__card:hover {
   border-color: var(--color-red);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.35);
   transform: translateY(-3px);
 }
 
@@ -208,7 +208,7 @@ const services = [
   font-family: var(--font-display);
   font-size: clamp(4rem, 8vw, 6rem);
   font-weight: 900;
-  color: rgba(0, 0, 0, 0.05);
+  color: rgba(255,255,255,0.05);
   line-height: 1;
   letter-spacing: -0.04em;
   pointer-events: none;
@@ -231,7 +231,7 @@ const services = [
   font-size: clamp(var(--text-xl), 2.5vw, var(--text-2xl));
   font-weight: 900;
   text-transform: uppercase;
-  color: var(--color-black);
+  color: var(--color-white);
   margin-bottom: var(--space-3);
   line-height: 1;
   letter-spacing: -0.01em;
@@ -241,7 +241,7 @@ const services = [
 
 .services__card-text {
   font-size: var(--text-sm);
-  color: var(--color-grey-mid);
+  color: rgba(255,255,255,0.45);
   line-height: 1.6;
   flex: 1;
   margin-bottom: var(--space-5);
@@ -278,19 +278,20 @@ const services = [
   display: inline-flex;
   align-items: center;
   padding: var(--space-4) var(--space-10);
-  border: 2px solid var(--color-black);
+  border: 2px solid rgba(255,255,255,0.25);
   font-family: var(--font-display);
   font-weight: 700;
   font-size: var(--text-base);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-black);
-  transition: background-color var(--transition-base), color var(--transition-base);
+  color: var(--color-white);
+  transition: background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base);
 }
 
 .services__cta-btn:hover {
-  background-color: var(--color-black);
-  color: var(--color-white);
+  background-color: var(--color-white);
+  color: var(--color-black);
+  border-color: var(--color-white);
 }
 
 @media (prefers-reduced-motion: reduce) {

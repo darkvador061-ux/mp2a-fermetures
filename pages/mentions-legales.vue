@@ -124,8 +124,15 @@ useHead({
 /* ── Hero bandeau ── */
 .legal__hero {
   background-color: var(--color-anthracite);
-  padding-block: var(--space-16) var(--space-12);
+  padding-top: calc(72px + var(--space-8));
+  padding-bottom: var(--space-12);
   border-bottom: 3px solid var(--color-red);
+}
+
+@media (min-width: 1024px) {
+  .legal__hero {
+    padding-top: calc(108px + var(--space-8));
+  }
 }
 
 .legal__eyebrow {

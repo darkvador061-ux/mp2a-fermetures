@@ -56,7 +56,7 @@ useHead({
 .page-banner {
   background-color: var(--color-black);
   color: var(--color-white);
-  padding-top: var(--space-10);
+  padding-top: calc(72px + var(--space-6));
   padding-bottom: var(--space-8);
   border-bottom: 3px solid var(--color-red);
 }
@@ -70,7 +70,7 @@ useHead({
 
 @media (min-width: 1024px) {
   .page-banner {
-    padding-top: calc(var(--space-20) + 88px);
+    padding-top: calc(var(--space-20) + 108px);
     padding-bottom: var(--space-20);
   }
 }

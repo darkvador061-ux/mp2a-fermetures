@@ -91,7 +91,7 @@ useHead({
 .page-banner {
   background-color: var(--color-black);
   color: var(--color-white);
-  padding-top: var(--space-10);
+  padding-top: calc(72px + var(--space-6));
   padding-bottom: var(--space-8);
   border-bottom: 3px solid var(--color-red);
 }
@@ -105,7 +105,7 @@ useHead({
 
 @media (min-width: 1024px) {
   .page-banner {
-    padding-top: calc(var(--space-20) + 88px);
+    padding-top: calc(var(--space-20) + 108px);
     padding-bottom: var(--space-20);
   }
 }
@@ -143,7 +143,7 @@ useHead({
 /* ── Particuliers & Professionnels ── */
 .targets {
   padding-block: var(--space-24);
-  background-color: var(--color-grey-light);
+  background-color: #1E2229;
 }
 
 .targets__grid {
@@ -160,8 +160,12 @@ useHead({
 
 .targets__card {
   padding: var(--space-10);
-  background-color: var(--color-white);
+  background-color: #262B33;
+  color: var(--color-white);
   border-top: 4px solid var(--color-red);
+  border-left: 1px solid rgba(255,255,255,0.07);
+  border-right: 1px solid rgba(255,255,255,0.07);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
   display: flex;
   flex-direction: column;
 }
@@ -202,12 +206,12 @@ useHead({
   padding-left: var(--space-5);
   position: relative;
   font-size: var(--text-base);
-  color: var(--color-grey-mid);
+  color: rgba(255,255,255,0.5);
   line-height: 1.5;
 }
 
 .targets__card--dark .targets__list li {
-  color: var(--color-grey);
+  color: rgba(255,255,255,0.45);
 }
 
 .targets__list li::before {

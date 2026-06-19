@@ -1,8 +1,9 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 
 const menuOpen = ref(false)
+const scrolled = ref(false)
 const route = useRoute()
 
 // Ferme le menu à chaque changement de page
@@ -17,6 +18,18 @@ watch(menuOpen, (val) => {
   }
 })
 
+// Détection scroll — header transparent → blanc
+function onScroll() {
+  scrolled.value = window.scrollY > 60
+}
+
+onMounted(() => {
+  if (typeof window === 'undefined') return
+  scrolled.value = window.scrollY > 60
+  window.addEventListener('scroll', onScroll, { passive: true })
+})
+onUnmounted(() => window.removeEventListener('scroll', onScroll))
+
 const links = [
   { to: '/', label: 'Accueil' },
   { to: '/services', label: 'Services' },
@@ -26,7 +39,7 @@ const links = [
 </script>
 
 <template>
-  <header class="header">
+  <header class="header" :class="{ 'is-scrolled': scrolled, 'menu-open': menuOpen }">
     <div class="container header__inner">
 
       <!-- Logo -->
@@ -97,11 +110,24 @@ const links = [
 
 <style scoped>
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: var(--z-sticky);
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
+  box-shadow: none;
+  transition:
+    background-color 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.header.is-scrolled,
+.header.menu-open {
   background-color: var(--color-white);
-  border-bottom: 1px solid var(--border);
+  border-bottom-color: var(--border);
   box-shadow: 0 1px 8px rgba(0,0,0,.06);
 }
 
@@ -129,6 +155,12 @@ const links = [
 .header__logo-text {
   height: 28px;
   width: auto;
+  filter: brightness(0) invert(1);
+  transition: filter 300ms ease;
+}
+
+.header.is-scrolled .header__logo-text,
+.header.menu-open .header__logo-text {
   filter: brightness(0);
 }
 
@@ -137,6 +169,13 @@ const links = [
   .header__logo { gap: 10px; }
   .header__logo-icon { height: 68px; }
   .header__logo-text { height: 42px; }
+}
+
+@media (min-width: 1024px) {
+  .header.is-scrolled .header__logo-text,
+  .header.menu-open .header__logo-text {
+    filter: brightness(0);
+  }
 }
 
 /* ── Nav desktop ── */
@@ -153,12 +192,16 @@ const links = [
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 500;
-  color: var(--color-anthracite);
+  color: rgba(255,255,255,0.85);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   transition: color var(--transition-fast);
   position: relative;
   padding-bottom: 4px;
+}
+
+.header.is-scrolled .header__nav-list a {
+  color: var(--color-anthracite);
 }
 
 .header__nav-list a::after {
@@ -191,21 +234,34 @@ const links = [
   display: none;
   align-items: center;
   padding: var(--space-2) var(--space-5);
-  background-color: var(--color-red);
-  color: var(--color-white);
+  background-color: transparent;
+  color: var(--color-red);
+  border: 1.5px solid var(--color-red);
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   border-radius: var(--radius-sm);
-  transition: background-color var(--transition-fast);
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .header__cta:hover {
+  background-color: var(--color-red);
+  color: var(--color-white);
+}
+
+.header.is-scrolled .header__cta {
+  background-color: var(--color-red);
+  color: var(--color-white);
+  border-color: var(--color-red);
+}
+
+.header.is-scrolled .header__cta:hover {
   background-color: var(--color-red-dark);
+  border-color: var(--color-red-dark);
 }
 
 /* ── Burger ── */
@@ -224,10 +280,15 @@ const links = [
   display: block;
   width: 100%;
   height: 2px;
-  background-color: var(--color-anthracite);
+  background-color: rgba(255,255,255,0.9);
   border-radius: 0;
-  transition: transform var(--transition-base), opacity var(--transition-base);
+  transition: transform var(--transition-base), opacity var(--transition-base), background-color 300ms ease;
   transform-origin: center;
+}
+
+.header.is-scrolled .header__burger-bar,
+.header.menu-open .header__burger-bar {
+  background-color: var(--color-anthracite);
 }
 
 .header__burger.is-open .header__burger-bar:nth-child(1) {

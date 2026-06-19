@@ -2,10 +2,10 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 const stats = [
-  { value: 10, suffix: '+', label: 'Années d\'expérience', sublabel: 'Alpes-Maritimes' },
-  { value: 6,  suffix: '',  label: 'Prestations',          sublabel: 'portails, volets, portes…' },
-  { value: 7,  suffix: '',  label: 'Marques maîtrisées',   sublabel: 'Nice, Somfy, BFT, FAAC…' },
-  { value: 24, suffix: 'h', label: 'Réponse devis',        sublabel: 'gratuit & sans engagement' },
+  { value: 100, suffix: '+', label: 'Chantiers réalisés',  sublabel: 'Alpes-Maritimes (06)' },
+  { value: 10,  suffix: '+', label: 'Ans d\'expérience',   sublabel: 'sur la Côte d\'Azur' },
+  { value: 7,   suffix: '',  label: 'Marques maîtrisées',  sublabel: 'Nice, Somfy, BFT, FAAC…' },
+  { value: 24,  suffix: 'h', label: 'Réponse devis',       sublabel: 'gratuit & sans engagement' },
 ]
 
 const brands = ['Nice', 'Somfy', 'BFT', 'FAAC', 'Cardin', 'CAME', 'Dormakaba']
@@ -104,7 +104,7 @@ onUnmounted(() => observer?.disconnect())
 <style scoped>
 /* ── Section ── */
 .trust {
-  background-color: var(--color-anthracite);
+  background-color: var(--color-black);
 }
 
 /* ── Stats ── */
@@ -183,6 +183,15 @@ onUnmounted(() => observer?.disconnect())
   letter-spacing: 0.04em;
   margin-top: var(--space-1);
   text-transform: none;
+}
+
+.trust__stat::after {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--color-red);
+  margin-top: var(--space-3);
 }
 
 /* ── Marques ── */

@@ -27,6 +27,12 @@ useHead({
 
 <style scoped>
 .contact-page :deep(.contact) {
-  padding-top: calc(var(--space-24) + 88px);
+  padding-top: calc(72px + var(--space-12));
+}
+
+@media (min-width: 1024px) {
+  .contact-page :deep(.contact) {
+    padding-top: calc(108px + var(--space-16));
+  }
 }
 </style>

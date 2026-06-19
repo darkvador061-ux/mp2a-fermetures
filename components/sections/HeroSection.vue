@@ -4,12 +4,6 @@
       <div class="hero__overlay"></div>
     </div>
 
-    <!-- Animation portail — panneaux anthracite qui s'écartent -->
-    <template v-if="showGate">
-      <div class="hero__gate hero__gate--left" :class="{ 'is-open': gateOpen }" aria-hidden="true"></div>
-      <div class="hero__gate hero__gate--right" :class="{ 'is-open': gateOpen }" aria-hidden="true"></div>
-    </template>
-
     <div class="container hero__content">
       <p class="hero__eyebrow">Portails · Volets · Portes de garage · Clôtures</p>
 
@@ -66,6 +60,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 const heroBg = ref(null)
 let rafId = null
 
+
 function onScroll() {
   if (rafId) return
   rafId = requestAnimationFrame(() => {
@@ -77,10 +72,6 @@ function onScroll() {
   })
 }
 
-// Animation portail
-const showGate = ref(false)
-const gateOpen = ref(false)
-
 onMounted(() => {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -89,14 +80,6 @@ onMounted(() => {
     if (heroBg.value) {
       heroBg.value.style.backgroundPositionY = `${70 + window.scrollY * 0.018}%`
     }
-  }
-
-  // Animation portail — une seule fois par session, désactivée si reduced-motion
-  const alreadyPlayed = sessionStorage.getItem('mp2a-gate-played')
-  if (!alreadyPlayed && !reducedMotion) {
-    showGate.value = true
-    sessionStorage.setItem('mp2a-gate-played', '1')
-    setTimeout(() => { gateOpen.value = true }, 300)
   }
 })
 
@@ -162,12 +145,14 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 .hero__content {
   position: relative;
   z-index: 1;
-  padding-block: var(--space-24);
+  padding-top: calc(72px + var(--space-16));
+  padding-bottom: var(--space-24);
   text-align: center;
 }
 
 @media (min-width: 1024px) {
   .hero__content {
+    padding-top: calc(108px + var(--space-16));
     text-align: left;
     max-width: 860px;
     margin-inline: 0;
@@ -391,23 +376,6 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   }
 }
 
-/* ── Animation portail ── */
-.hero__gate {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 50%;
-  background-color: var(--color-anthracite);
-  z-index: 3;
-  transition: transform 1.4s cubic-bezier(0.76, 0, 0.24, 1);
-  will-change: transform;
-}
-
-.hero__gate--left  { left: 0;  transform: translateX(0); }
-.hero__gate--right { right: 0; transform: translateX(0); }
-
-.hero__gate--left.is-open  { transform: translateX(-100%); }
-.hero__gate--right.is-open { transform: translateX(100%); }
 
 @media (max-width: 479px) {
   .hero__badge-sep {
@@ -428,9 +396,6 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero__gate {
-    transition: none;
-  }
   .hero__scroll-line {
     animation: none;
     opacity: 0.5;
