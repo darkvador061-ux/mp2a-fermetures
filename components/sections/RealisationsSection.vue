@@ -166,32 +166,44 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
   <section class="realisations" id="realisations">
     <div class="realisations__inner" :class="{ 'realisations__inner--carousel': preview }">
 
-      <!-- En-tête latéral (desktop) -->
-      <div
-        class="realisations__header"
-        v-motion
-        :initial="{ opacity: 0, y: 30 }"
-        :visible-once="{ opacity: 1, y: 0, transition: { duration: 600 } }"
-      >
-        <span class="realisations__header-deco" aria-hidden="true">04</span>
-        <p class="realisations__eyebrow">Nos chantiers</p>
-        <h2 class="realisations__title">Nos<br>réalisations</h2>
-        <p class="realisations__intro">
-          Quelques exemples de nos interventions dans les Alpes-Maritimes.
-        </p>
-        <NuxtLink v-if="preview" to="/realisations" class="realisations__cta-btn">
-          Voir tout
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </NuxtLink>
-      </div>
-
-      <!-- Accueil : belt carousel une seule ligne -->
-      <div v-if="preview" class="realisations__carousel-wrap">
-        <CardCarousel :items="displayedItems" @select="openLightbox" />
-      </div>
-
-      <!-- Grille complète (page /realisations) -->
-      <div v-else class="realisations__full-panel">
+      <template v-if="preview">
+        <div
+          class="realisations__header realisations__header--preview"
+          v-motion
+          :initial="{ opacity: 0, y: 24 }"
+          :visible-once="{ opacity: 1, y: 0, transition: { duration: 600 } }"
+        >
+          <h2 class="realisations__title realisations__title--inline">Nos réalisations</h2>
+          <p class="realisations__intro">
+            Quelques exemples de nos interventions dans les Alpes-Maritimes.
+          </p>
+          <p class="realisations__eyebrow">Nos chantiers</p>
+        </div>
+        <div class="realisations__carousel-wrap">
+          <CardCarousel :items="displayedItems" @select="openLightbox" />
+        </div>
+        <div class="realisations__cta-row">
+          <NuxtLink to="/realisations" class="realisations__cta-btn">
+            Voir tout
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </NuxtLink>
+        </div>
+      </template>
+      <template v-if="!preview">
+        <div
+          class="realisations__header"
+          v-motion
+          :initial="{ opacity: 0, y: 30 }"
+          :visible-once="{ opacity: 1, y: 0, transition: { duration: 600 } }"
+        >
+          <span class="realisations__header-deco" aria-hidden="true">04</span>
+          <p class="realisations__eyebrow">Nos chantiers</p>
+          <h2 class="realisations__title">Nos<br>réalisations</h2>
+          <p class="realisations__intro">
+            Quelques exemples de nos interventions dans les Alpes-Maritimes.
+          </p>
+        </div>
+        <div class="realisations__full-panel">
 
         <!-- Galerie 3D — desktop uniquement -->
         <div class="realisations__cg-desktop">
@@ -249,6 +261,7 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
         </div>
 
       </div>
+      </template>
 
     </div>
 
@@ -453,38 +466,41 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
   color: var(--color-white);
 }
 
-/* ── Mode carousel accueil : layout colonne ── */
+/* ── Accueil : layout colonne pleine largeur ── */
 .realisations__inner--carousel {
   flex-direction: column !important;
 }
 
-@media (min-width: 1024px) {
-  .realisations__inner--carousel .realisations__header {
-    width: 100%;
-    position: static;
-    flex-direction: row;
-    align-items: flex-end;
-    gap: var(--space-16);
-    overflow: visible;
-  }
+/* Header preview : empilé, pleine largeur */
+.realisations__header--preview {
+  width: 100%;
+  position: static !important;
+  overflow: visible !important;
+  flex-direction: column;
+  gap: var(--space-3);
+}
 
-  .realisations__inner--carousel .realisations__header-deco {
-    display: none;
-  }
+/* Titre sur une seule ligne */
+.realisations__title--inline {
+  white-space: nowrap;
+  font-size: clamp(2rem, 5vw, 4rem);
+}
 
-  .realisations__inner--carousel .realisations__title {
-    font-size: clamp(3rem, 5vw, 4.5rem);
-    white-space: nowrap;
-  }
+/* Sous-titre + eyebrow dans le header preview */
+.realisations__header--preview .realisations__intro {
+  max-width: 52ch;
+  color: rgba(255, 255, 255, 0.5);
+}
 
-  .realisations__inner--carousel .realisations__intro {
-    max-width: 36ch;
-  }
+.realisations__header--preview .realisations__eyebrow {
+  margin-top: var(--space-2);
+}
 
-  .realisations__inner--carousel .realisations__cta-btn {
-    margin-left: auto;
-    flex-shrink: 0;
-  }
+/* ── Bouton "Voir tout" sous le carousel ── */
+.realisations__cta-row {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: var(--space-4);
 }
 
 /* ── Belt carousel (accueil) ── */
