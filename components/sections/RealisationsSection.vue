@@ -453,7 +453,7 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
   font-size: var(--text-sm);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-red);
+  color: var(--color-white);
   cursor: pointer;
   border: 1.5px solid var(--color-red);
   padding: var(--space-2) var(--space-4);

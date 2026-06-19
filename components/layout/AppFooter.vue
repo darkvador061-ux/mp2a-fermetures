@@ -164,7 +164,7 @@
   gap: var(--space-2);
   font-size: var(--text-xs);
   font-weight: 500;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.55);
   letter-spacing: 0.04em;
 }
 

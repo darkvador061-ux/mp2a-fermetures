@@ -179,7 +179,7 @@ onUnmounted(() => observer?.disconnect())
 
 .trust__stat-sub {
   font-size: var(--text-xs);
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.55);
   letter-spacing: 0.04em;
   margin-top: var(--space-1);
   text-transform: none;
@@ -204,7 +204,7 @@ onUnmounted(() => observer?.disconnect())
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.50);
   text-align: center;
   margin-bottom: var(--space-4);
   max-width: none;
@@ -224,7 +224,7 @@ onUnmounted(() => observer?.disconnect())
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.30);
+  color: rgba(255,255,255,0.50);
   transition: color var(--transition-base);
   cursor: default;
   position: relative;

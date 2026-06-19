@@ -103,7 +103,6 @@ onUnmounted(() => {
         :key="i"
         class="cc__card"
         role="button"
-        :aria-label="`Agrandir : ${item.titre}`"
         tabindex="-1"
         @click="emit('select', item)"
       >

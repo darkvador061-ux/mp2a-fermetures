@@ -207,7 +207,7 @@ async function handleSubmit() {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-red);
+  color: rgba(255,255,255,0.70);
   margin-bottom: var(--space-3);
   max-width: none;
 }
@@ -222,7 +222,7 @@ async function handleSubmit() {
 }
 
 .contact__intro {
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.55);
   font-size: var(--text-lg);
   max-width: 55ch;
   margin-inline: auto;
@@ -350,14 +350,14 @@ async function handleSubmit() {
 
 .contact__rgpd {
   font-size: var(--text-xs);
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.50);
   line-height: 1.6;
   max-width: none;
   margin-top: calc(-1 * var(--space-2));
 }
 
 .contact__rgpd a {
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.50);
   text-decoration: underline;
   text-underline-offset: 2px;
   transition: color var(--transition-fast);
@@ -416,7 +416,7 @@ async function handleSubmit() {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-red);
+  color: rgba(255,255,255,0.70);
   max-width: none;
 }
 
