@@ -123,7 +123,7 @@ const services = [
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--color-red);
+  color: rgba(255,255,255,0.70);
   margin-bottom: var(--space-4);
   max-width: none;
 }
@@ -141,7 +141,7 @@ const services = [
 
 .services__intro {
   font-size: var(--text-base);
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.55);
   max-width: 52ch;
   line-height: 1.6;
 }
@@ -200,7 +200,7 @@ const services = [
   font-family: var(--font-display);
   font-size: clamp(4rem, 8vw, 6rem);
   font-weight: 900;
-  color: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.40);
   line-height: 1;
   letter-spacing: -0.04em;
   pointer-events: none;
@@ -233,7 +233,7 @@ const services = [
 
 .services__card-text {
   font-size: var(--text-sm);
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.55);
   line-height: 1.6;
   flex: 1;
   margin-bottom: var(--space-5);

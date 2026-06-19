@@ -84,7 +84,7 @@ useHead({
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-red);
+  color: rgba(255,255,255,0.70);
   margin-bottom: var(--space-3);
   max-width: none;
 }
@@ -127,7 +127,7 @@ useHead({
 
 .realisations-cta__text {
   font-size: var(--text-lg);
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-white);
   margin-bottom: var(--space-8);
   max-width: none;
 }

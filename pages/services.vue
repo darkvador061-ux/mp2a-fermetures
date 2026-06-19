@@ -119,7 +119,7 @@ useHead({
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-red);
+  color: rgba(255,255,255,0.70);
   margin-bottom: var(--space-3);
   max-width: none;
 }
@@ -180,7 +180,7 @@ useHead({
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-red);
+  color: rgba(255,255,255,0.70);
   margin-bottom: var(--space-2);
 }
 
@@ -206,12 +206,12 @@ useHead({
   padding-left: var(--space-5);
   position: relative;
   font-size: var(--text-base);
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.55);
   line-height: 1.5;
 }
 
 .targets__card--dark .targets__list li {
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.55);
 }
 
 .targets__list li::before {
@@ -275,7 +275,7 @@ useHead({
 
 .services-cta__text {
   font-size: var(--text-lg);
-  color: rgba(255,255,255,0.8);
+  color: var(--color-white);
   margin-bottom: var(--space-8);
   max-width: none;
 }

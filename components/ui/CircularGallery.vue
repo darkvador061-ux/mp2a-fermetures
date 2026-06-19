@@ -87,12 +87,12 @@ function getOpacity(index) {
   <div
     ref="containerRef"
     class="cg"
-    role="region"
-    aria-label="Galerie vidéo"
   >
+    <!-- Plateau 3D purement visuel -->
     <div
       class="cg__stage"
       :style="{ transform: `rotateY(${rotation}deg)` }"
+      aria-hidden="true"
     >
       <div
         v-for="(item, i) in items"
@@ -103,11 +103,7 @@ function getOpacity(index) {
           opacity: getOpacity(i),
           zIndex: Math.round(getOpacity(i) * 10)
         }"
-        role="button"
-        :aria-label="`Voir la vidéo : ${item.titre}`"
-        tabindex="0"
         @click="emit('select', item)"
-        @keydown.enter="emit('select', item)"
       >
         <div class="cg__card-inner">
           <div class="cg__video-wrap">
@@ -128,7 +124,10 @@ function getOpacity(index) {
             </div>
             <span class="cg__badge">{{ item.categorie }}</span>
           </div>
-          <div class="cg__info">
+          <div
+            class="cg__info"
+            :style="{ visibility: getOpacity(i) < 0.85 ? 'hidden' : 'visible' }"
+          >
             <p class="cg__title">{{ item.titre }}</p>
             <span class="cg__lieu">
               <span class="cg__lieu-dot" aria-hidden="true"></span>
@@ -138,6 +137,19 @@ function getOpacity(index) {
         </div>
       </div>
     </div>
+
+    <!-- Liste accessible (visually hidden) pour clavier / screen readers -->
+    <ul class="cg__sr-list" role="list" aria-label="Galerie vidéo">
+      <li v-for="item in items" :key="`sr-${item.src}`">
+        <button
+          class="cg__sr-btn"
+          type="button"
+          @click="emit('select', item)"
+        >
+          {{ item.titre }} — {{ item.categorie }}, {{ item.lieu }}
+        </button>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -149,6 +161,21 @@ function getOpacity(index) {
   height: 500px;
   perspective: 1800px;
   cursor: default;
+}
+
+/* Liste visually-hidden pour accessibilité clavier/screen reader */
+.cg__sr-list {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.cg__sr-btn {
+  all: unset;
+  cursor: pointer;
 }
 
 /* ── Plateau 3D rotatif ── */
@@ -247,7 +274,8 @@ function getOpacity(index) {
   top: 10px;
   left: 10px;
   padding: 3px 8px;
-  background-color: var(--color-red);
+  background-color: rgba(0,0,0,0.80);
+  border-left: 2px solid var(--color-red);
   color: var(--color-white);
   font-family: var(--font-body);
   font-size: 9px;
@@ -290,7 +318,7 @@ function getOpacity(index) {
   gap: 5px;
   font-size: 9px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.60);
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }

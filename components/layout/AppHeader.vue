@@ -225,8 +225,12 @@ const links = [
 }
 
 .header__nav-list a.router-link-exact-active {
-  color: var(--color-anthracite);
+  color: var(--color-white);
   font-weight: 700;
+}
+
+.header.is-scrolled .header__nav-list a.router-link-exact-active {
+  color: var(--color-anthracite);
 }
 
 /* ── CTA desktop ── */
@@ -235,8 +239,8 @@ const links = [
   align-items: center;
   padding: var(--space-2) var(--space-5);
   background-color: transparent;
-  color: var(--color-red);
-  border: 1.5px solid var(--color-red);
+  color: var(--color-white);
+  border: 1.5px solid var(--color-white);
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 700;

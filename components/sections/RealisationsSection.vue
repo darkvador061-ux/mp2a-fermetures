@@ -403,7 +403,7 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
   font-family: var(--font-display);
   font-size: 9rem;
   font-weight: 900;
-  color: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.40);
   line-height: 1;
   letter-spacing: -0.04em;
   pointer-events: none;
@@ -423,7 +423,7 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-red);
+  color: rgba(255,255,255,0.70);
   max-width: none;
 }
 
@@ -439,7 +439,7 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
 
 .realisations__intro {
   font-size: var(--text-sm);
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.55);
   line-height: 1.6;
   max-width: 28ch;
 }
