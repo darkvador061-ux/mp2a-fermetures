@@ -228,7 +228,7 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
         <div class="realisations__cg-desktop">
           <CircularGallery
             :items="displayedItems"
-            :radius="460"
+            :radius="390"
             @select="openLightbox"
           />
         </div>
