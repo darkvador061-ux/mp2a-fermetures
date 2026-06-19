@@ -130,19 +130,11 @@ onUnmounted(() => {
 <style scoped>
 /* ── Conteneur clip ── */
 .cc {
-  /* Mobile : caché */
-  display: none;
+  display: block;
   width: 100%;
   overflow: hidden;
   cursor: default;
   padding-block: var(--space-4);
-}
-
-/* Tablette + Desktop : visible */
-@media (min-width: 768px) {
-  .cc {
-    display: block;
-  }
 }
 
 /* ── Piste (les 3 sets bout à bout) ── */
@@ -157,13 +149,20 @@ onUnmounted(() => {
 /* ── Carte photo ── */
 .cc__card {
   flex-shrink: 0;
-  width: 360px;
-  height: 270px;
+  width: 240px;
+  height: 180px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
   border: 1px solid rgba(255, 255, 255, 0.08);
   transition: border-color 250ms ease, box-shadow 250ms ease;
+}
+
+@media (min-width: 640px) {
+  .cc__card {
+    width: 320px;
+    height: 240px;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -198,8 +197,8 @@ onUnmounted(() => {
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.88) 0%,
-    rgba(0, 0, 0, 0.3) 45%,
+    rgba(0, 0, 0, 0.82) 0%,
+    rgba(0, 0, 0, 0.18) 55%,
     transparent 100%
   );
   display: flex;
@@ -207,12 +206,17 @@ onUnmounted(() => {
   justify-content: flex-end;
   padding: var(--space-4) var(--space-5);
   gap: var(--space-1);
-  opacity: 0;
-  transition: opacity 280ms ease;
+  opacity: 1;
+  transition: background 280ms ease;
 }
 
 .cc__card:hover .cc__overlay {
-  opacity: 1;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.4) 55%,
+    transparent 100%
+  );
 }
 
 .cc__badge {

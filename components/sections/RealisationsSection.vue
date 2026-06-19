@@ -185,35 +185,10 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
         </NuxtLink>
       </div>
 
-      <!-- Accueil : carousel tablette+desktop / grille 2 colonnes mobile -->
-      <template v-if="preview">
-
-        <!-- Belt carousel — tablette + desktop (≥768px) -->
-        <div class="realisations__carousel-wrap">
-          <CardCarousel :items="displayedItems" @select="openLightbox" />
-        </div>
-
-        <!-- Grille 2 colonnes — mobile uniquement (<768px) -->
-        <div class="realisations__mobile-grid">
-          <article
-            v-for="(r, i) in displayedItems"
-            :key="i"
-            class="realisations__mobile-item"
-            role="button"
-            :aria-label="`Agrandir : ${r.titre}`"
-            tabindex="0"
-            @click="openLightbox(r)"
-            @keydown.enter="openLightbox(r)"
-          >
-            <img :src="$url(r.src)" :alt="r.titre" class="realisations__mobile-photo" loading="lazy" />
-            <div class="realisations__mobile-overlay">
-              <span class="realisations__badge">{{ r.categorie }}</span>
-              <p class="realisations__item-title">{{ r.titre }}</p>
-            </div>
-          </article>
-        </div>
-
-      </template>
+      <!-- Accueil : belt carousel une seule ligne -->
+      <div v-if="preview" class="realisations__carousel-wrap">
+        <CardCarousel :items="displayedItems" @select="openLightbox" />
+      </div>
 
       <!-- Grille complète (page /realisations) -->
       <div v-else class="realisations__full-panel">
@@ -518,72 +493,6 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
   min-width: 0;
 }
 
-/* ── Grille 2 colonnes — mobile (<768px) uniquement ── */
-.realisations__mobile-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2px;
-}
-
-@media (min-width: 768px) {
-  .realisations__mobile-grid {
-    display: none;
-  }
-}
-
-.realisations__mobile-item {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  cursor: pointer;
-  background-color: var(--color-black);
-}
-
-.realisations__mobile-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 400ms ease;
-}
-
-.realisations__mobile-item:hover .realisations__mobile-photo {
-  transform: scale(1.06);
-}
-
-.realisations__mobile-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: var(--space-3);
-  gap: 3px;
-}
-
-.realisations__badge {
-  display: inline-block;
-  width: fit-content;
-  padding: 2px 6px;
-  background-color: var(--color-red);
-  color: var(--color-white);
-  font-family: var(--font-body);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.realisations__item-title {
-  font-family: var(--font-display);
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: var(--color-white);
-  line-height: 1.2;
-  max-width: none;
-}
 
 /* ── Panel full-page (desktop: carousel / mobile: grille) ── */
 .realisations__full-panel {
