@@ -12,29 +12,64 @@ const props = defineProps({
   },
   autoRotateSpeed: {
     type: Number,
-    default: 0.18
+    default: 0.06
   }
 })
 
 const emit = defineEmits(['select'])
 
+const containerRef = ref(null)
 const rotation = ref(0)
-const paused = ref(false)
+let currentSpeed = 0.06
+let targetSpeed = 0.06
 let rafId = null
 
-function animate() {
-  if (!paused.value) {
-    rotation.value += props.autoRotateSpeed
+const PROXIMITY_PX = 220
+
+function distToRect(rect, x, y) {
+  const dx = Math.max(rect.left - x, 0, x - rect.right)
+  const dy = Math.max(rect.top - y, 0, y - rect.bottom)
+  return Math.sqrt(dx * dx + dy * dy)
+}
+
+function onMouseMove(e) {
+  if (!containerRef.value) return
+  const rect = containerRef.value.getBoundingClientRect()
+  const dist = distToRect(rect, e.clientX, e.clientY)
+
+  if (dist === 0) {
+    // Souris à l'intérieur — très lent
+    targetSpeed = props.autoRotateSpeed * 0.08
+  } else if (dist < PROXIMITY_PX) {
+    // À l'approche — ralentissement progressif
+    const t = dist / PROXIMITY_PX
+    targetSpeed = props.autoRotateSpeed * (0.08 + t * 0.92)
+  } else {
+    targetSpeed = props.autoRotateSpeed
   }
+}
+
+function animate() {
+  // Interpolation douce vers la vitesse cible
+  currentSpeed += (targetSpeed - currentSpeed) * 0.04
+  rotation.value += currentSpeed
   rafId = requestAnimationFrame(animate)
 }
 
 onMounted(() => {
+  currentSpeed = props.autoRotateSpeed
+  targetSpeed = props.autoRotateSpeed
+  if (typeof window !== 'undefined') {
+    window.addEventListener('mousemove', onMouseMove, { passive: true })
+  }
   rafId = requestAnimationFrame(animate)
 })
 
 onUnmounted(() => {
   if (rafId) cancelAnimationFrame(rafId)
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('mousemove', onMouseMove)
+  }
 })
 
 const anglePerItem = computed(() => 360 / props.items.length)
@@ -50,9 +85,8 @@ function getOpacity(index) {
 
 <template>
   <div
+    ref="containerRef"
     class="cg"
-    @mouseenter="paused = true"
-    @mouseleave="paused = false"
     role="region"
     aria-label="Galerie vidéo"
   >

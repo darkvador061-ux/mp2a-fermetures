@@ -283,21 +283,6 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
 
     </div>
 
-    <!-- Galerie vidéo 3D — accueil, desktop uniquement -->
-    <div v-if="preview" class="realisations__video-cg">
-      <div class="container">
-        <div class="realisations__video-cg-header">
-          <span class="realisations__eyebrow">Nos chantiers en vidéo</span>
-          <h3 class="realisations__video-cg-title">Interventions filmées</h3>
-        </div>
-        <CircularGallery
-          :items="homepageVideos"
-          :radius="380"
-          @select="openLightbox"
-        />
-      </div>
-    </div>
-
   </section>
 
   <!-- Lightbox -->
@@ -720,37 +705,6 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
   }
 }
 
-/* ── Section vidéo 3D — accueil ── */
-.realisations__video-cg {
-  display: none;
-  padding-top: var(--space-4);
-  padding-bottom: var(--space-16);
-}
-
-@media (min-width: 1024px) {
-  .realisations__video-cg {
-    display: block;
-  }
-}
-
-.realisations__video-cg-header {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  margin-bottom: var(--space-8);
-  padding-inline: var(--space-6);
-}
-
-.realisations__video-cg-title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 3vw, 3rem);
-  font-weight: 900;
-  text-transform: uppercase;
-  color: var(--color-white);
-  letter-spacing: -0.02em;
-  line-height: 1;
-  max-width: none;
-}
 
 /* ── Grille complète /realisations ── */
 .realisations__grid {
