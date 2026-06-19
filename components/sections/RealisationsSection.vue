@@ -164,7 +164,7 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
 
 <template>
   <section class="realisations" id="realisations">
-    <div class="realisations__inner">
+    <div class="realisations__inner" :class="{ 'realisations__inner--carousel': preview }">
 
       <!-- En-tête latéral (desktop) -->
       <div
@@ -185,41 +185,35 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
         </NuxtLink>
       </div>
 
-      <!-- Galerie asymétrique (accueil) -->
-      <div v-if="preview" class="realisations__gallery">
-        <article
-          v-for="(r, i) in displayedItems"
-          :key="i"
-          class="realisations__item"
-          :class="`realisations__item--${i + 1}`"
-          v-motion
-          :initial="{ opacity: 0, y: 24 }"
-          :visible-once="{ opacity: 1, y: 0, transition: { duration: 500, delay: i * 90 } }"
-          @click="openLightbox(r)"
-          role="button"
-          :aria-label="`Agrandir : ${r.titre}`"
-          tabindex="0"
-          @keydown.enter="openLightbox(r)"
-        >
-          <img
-            :src="$url(r.src)"
-            :alt="r.titre"
-            class="realisations__photo"
-            loading="lazy"
-          />
-          <span class="realisations__num" aria-hidden="true">{{ pad(i + 1) }}</span>
-          <div class="realisations__overlay">
-            <div class="realisations__meta">
+      <!-- Accueil : carousel tablette+desktop / grille 2 colonnes mobile -->
+      <template v-if="preview">
+
+        <!-- Belt carousel — tablette + desktop (≥768px) -->
+        <div class="realisations__carousel-wrap">
+          <CardCarousel :items="displayedItems" @select="openLightbox" />
+        </div>
+
+        <!-- Grille 2 colonnes — mobile uniquement (<768px) -->
+        <div class="realisations__mobile-grid">
+          <article
+            v-for="(r, i) in displayedItems"
+            :key="i"
+            class="realisations__mobile-item"
+            role="button"
+            :aria-label="`Agrandir : ${r.titre}`"
+            tabindex="0"
+            @click="openLightbox(r)"
+            @keydown.enter="openLightbox(r)"
+          >
+            <img :src="$url(r.src)" :alt="r.titre" class="realisations__mobile-photo" loading="lazy" />
+            <div class="realisations__mobile-overlay">
               <span class="realisations__badge">{{ r.categorie }}</span>
               <p class="realisations__item-title">{{ r.titre }}</p>
-              <span class="realisations__lieu">
-                <span class="realisations__lieu-dot" aria-hidden="true"></span>
-                {{ r.lieu }}
-              </span>
             </div>
-          </div>
-        </article>
-      </div>
+          </article>
+        </div>
+
+      </template>
 
       <!-- Grille complète (page /realisations) -->
       <div v-else class="realisations__full-panel">
@@ -484,206 +478,111 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
   color: var(--color-white);
 }
 
-/* ── Galerie "Bannière + Triptyque" ── */
-.realisations__gallery {
-  flex: 1;
-  display: grid;
-  background-color: var(--color-red); /* gaps = lignes rouges */
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 170px 210px;
-  gap: 2px;
-}
-
-@media (min-width: 640px) {
-  .realisations__gallery {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 160px 300px;
-    gap: 3px;
-  }
+/* ── Mode carousel accueil : layout colonne ── */
+.realisations__inner--carousel {
+  flex-direction: column !important;
 }
 
 @media (min-width: 1024px) {
-  .realisations__gallery {
-    grid-template-rows: 180px 340px;
-    gap: 3px;
+  .realisations__inner--carousel .realisations__header {
+    width: 100%;
+    position: static;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: var(--space-16);
+    overflow: visible;
+  }
+
+  .realisations__inner--carousel .realisations__header-deco {
+    display: none;
+  }
+
+  .realisations__inner--carousel .realisations__title {
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    white-space: nowrap;
+  }
+
+  .realisations__inner--carousel .realisations__intro {
+    max-width: 36ch;
+  }
+
+  .realisations__inner--carousel .realisations__cta-btn {
+    margin-left: auto;
+    flex-shrink: 0;
   }
 }
 
-/* Mobile : 2×2 */
-.realisations__item--1 { grid-column: 1;     grid-row: 1; }
-.realisations__item--2 { grid-column: 2;     grid-row: 1; }
-.realisations__item--3 { grid-column: 1;     grid-row: 2; }
-.realisations__item--4 { grid-column: 2;     grid-row: 2; }
-
-/* ≥640px : bannière pleine largeur + triptyque */
-@media (min-width: 640px) {
-  .realisations__item--1 { grid-column: 1 / 4; grid-row: 1; }
-  .realisations__item--2 { grid-column: 1;     grid-row: 2; }
-  .realisations__item--3 { grid-column: 2;     grid-row: 2; }
-  .realisations__item--4 { grid-column: 3;     grid-row: 2; }
+/* ── Belt carousel (accueil) ── */
+.realisations__carousel-wrap {
+  width: 100%;
+  min-width: 0;
 }
 
-.realisations__item {
+/* ── Grille 2 colonnes — mobile (<768px) uniquement ── */
+.realisations__mobile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+}
+
+@media (min-width: 768px) {
+  .realisations__mobile-grid {
+    display: none;
+  }
+}
+
+.realisations__mobile-item {
   position: relative;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   cursor: pointer;
-  background-color: #111;
-  transition: transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94), z-index 0ms;
-  z-index: 1;
+  background-color: var(--color-black);
 }
 
-.realisations__item:hover {
-  transform: scale(1.04);
-  z-index: 3;
-}
-
-.realisations__photo {
+.realisations__mobile-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 400ms ease;
 }
 
-.realisations__item:hover .realisations__photo {
-  transform: scale(1.08);
+.realisations__mobile-item:hover .realisations__mobile-photo {
+  transform: scale(1.06);
 }
 
-/* Inset border rouge au hover — signature premium */
-.realisations__item::after {
-  content: '';
+.realisations__mobile-overlay {
   position: absolute;
   inset: 0;
-  box-shadow: inset 0 0 0 0px var(--color-red);
-  z-index: 6;
-  transition: box-shadow 250ms ease;
-  pointer-events: none;
-}
-
-.realisations__item:hover::after {
-  box-shadow: inset 0 0 0 2px var(--color-red);
-}
-
-/* Filigrane numéro — derrière overlay */
-.realisations__num {
-  position: absolute;
-  bottom: 10px;
-  left: 8px;
-  z-index: 1;
-  font-family: var(--font-display);
-  font-size: clamp(3.5rem, 8vw, 6rem);
-  font-weight: 900;
-  color: rgba(255,255,255,0.06);
-  line-height: 1;
-  letter-spacing: -0.04em;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* Overlay cinématique */
-.realisations__overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,0.88) 0%,
-    rgba(0,0,0,0.4) 38%,
-    rgba(0,0,0,0.05) 65%,
-    transparent 100%
-  );
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: var(--space-4);
-  transition: background 300ms ease;
-}
-
-.realisations__item:hover .realisations__overlay {
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,0.92) 0%,
-    rgba(0,0,0,0.5) 38%,
-    rgba(0,0,0,0.08) 65%,
-    transparent 100%
-  );
-}
-
-/* Meta bas */
-.realisations__meta {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
+  padding: var(--space-3);
+  gap: 3px;
 }
 
 .realisations__badge {
   display: inline-block;
   width: fit-content;
-  padding: 2px var(--space-2);
+  padding: 2px 6px;
   background-color: var(--color-red);
   color: var(--color-white);
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .realisations__item-title {
   font-family: var(--font-display);
-  font-size: clamp(0.8rem, 1.8vw, 1.05rem);
+  font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
   color: var(--color-white);
-  line-height: 1.15;
-  letter-spacing: 0.01em;
+  line-height: 1.2;
   max-width: none;
-}
-
-/* Localisation */
-.realisations__lieu {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.45);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-top: 2px;
-}
-
-.realisations__lieu-dot {
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background-color: var(--color-red);
-  flex-shrink: 0;
-}
-
-/* Item 1 (bannière) : overlay latéral + meta centrée */
-@media (min-width: 640px) {
-  .realisations__item--1 .realisations__overlay {
-    background: linear-gradient(
-      to right,
-      rgba(0,0,0,0.85) 0%,
-      rgba(0,0,0,0.3) 50%,
-      rgba(0,0,0,0.05) 100%
-    );
-    justify-content: flex-end;
-    padding: var(--space-6) var(--space-8);
-  }
-
-  .realisations__item--1 .realisations__num {
-    font-size: clamp(5rem, 10vw, 9rem);
-    bottom: auto;
-    top: 50%;
-    left: auto;
-    right: var(--space-6);
-    transform: translateY(-50%);
-    color: rgba(255,255,255,0.04);
-  }
 }
 
 /* ── Panel full-page (desktop: carousel / mobile: grille) ── */
