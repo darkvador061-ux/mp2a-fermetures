@@ -46,14 +46,6 @@ const services = [
     short: 'Intervention rapide en cas de panne. Contrats d\'entretien pour syndics et entreprises.',
     detail: 'Dépannage urgent portails et automatismes en panne. Remplacement de pièces toutes marques. Contrats de maintenance annuels pour copropriétés et professionnels.',
     anchor: '#depannage'
-  },
-  {
-    id: 'clotures',
-    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
-    title: 'Clôtures & contrôle d\'accès',
-    short: 'Clôtures aluminium, grillage, interphones, visiphones et badges d\'accès.',
-    detail: 'Pose de clôtures aluminium, rigides ou grillagées. Systèmes de contrôle d\'accès : interphones, visiphones, claviers à code, badges RFID pour résidences et entreprises.',
-    anchor: '#clotures'
   }
 ]
 </script>

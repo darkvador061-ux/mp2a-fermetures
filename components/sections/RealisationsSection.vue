@@ -89,6 +89,22 @@ const realisations = [
     titre: '2 barrières BFT Maxima Ultra 68',
     description: 'Mise en place de 2 barrières BFT Maxima Ultra 68 avec herses hautes et basses.',
     lieu: 'Alpes-Maritimes (06)'
+  },
+  {
+    type: 'video',
+    src: '/videos/modernisation-portail-battant-nice.mp4',
+    categorie: 'Portail battant',
+    titre: 'Modernisation d\'un portail battant — Nice',
+    description: 'Remplacement des motorisations, de l\'armoire de commande et des éléments de sécurité sur les hauteurs de Nice.',
+    lieu: 'Nice (06)'
+  },
+  {
+    type: 'video',
+    src: '/videos/portail-battant-cebel-portillon.mp4',
+    categorie: 'Portail battant',
+    titre: 'Portail battant CEBEL avec portillon attenant',
+    description: 'Mise en place d\'un portail battant CEBEL avec portillon attenant.',
+    lieu: 'Alpes-Maritimes (06)'
   }
 ]
 
