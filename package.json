@@ -17,6 +17,7 @@
     "swiper": "^11.2.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.0",
     "sharp": "^0.35.1"
   }
 }
