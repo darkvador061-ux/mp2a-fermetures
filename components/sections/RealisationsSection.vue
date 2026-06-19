@@ -114,7 +114,15 @@ const displayedItems = computed(() =>
     : realisations.filter(r => !r.homepage)
 )
 
-const lightboxItems = computed(() => displayedItems.value)
+const homepageVideos = computed(() =>
+  realisations.filter(r => r.type === 'video').slice(0, 6)
+)
+
+const lightboxItems = computed(() =>
+  props.preview
+    ? [...displayedItems.value, ...homepageVideos.value]
+    : displayedItems.value
+)
 
 const lightboxItem = ref(null)
 
@@ -214,52 +222,82 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
       </div>
 
       <!-- Grille complète (page /realisations) -->
-      <div v-else class="realisations__grid">
-        <article
-          v-for="(r, i) in displayedItems"
-          :key="i"
-          class="realisations__card"
-          v-motion
-          :initial="{ opacity: 0, y: 30 }"
-          :visible-once="{ opacity: 1, y: 0, transition: { duration: 500, delay: i * 80 } }"
-          role="button"
-          tabindex="0"
-          :aria-label="`Ouvrir : ${r.titre}`"
-          @click="openLightbox(r)"
-          @keydown.enter="openLightbox(r)"
-        >
-          <div class="realisations__media">
-            <video
-              v-if="r.type === 'video'"
-              :src="$url(r.src)"
-              class="realisations__video"
-              autoplay
-              muted
-              loop
-              playsinline
-              :aria-label="r.titre"
-            ></video>
-            <img
-              v-else
-              :src="$url(r.src)"
-              :alt="r.titre"
-              class="realisations__img"
-              loading="lazy"
-            />
-            <span class="realisations__badge">{{ r.categorie }}</span>
-          </div>
-          <div class="realisations__info">
-            <h3 class="realisations__card-title">{{ r.titre }}</h3>
-            <p class="realisations__card-desc">{{ r.description }}</p>
-            <span class="realisations__card-lieu">
-              <span class="realisations__card-lieu-dot" aria-hidden="true"></span>
-              {{ r.lieu }}
-            </span>
-          </div>
-        </article>
+      <div v-else class="realisations__full-panel">
+
+        <!-- Galerie 3D — desktop uniquement -->
+        <div class="realisations__cg-desktop">
+          <CircularGallery
+            :items="displayedItems"
+            :radius="460"
+            @select="openLightbox"
+          />
+        </div>
+
+        <!-- Grille classique — mobile / tablette -->
+        <div class="realisations__grid">
+          <article
+            v-for="(r, i) in displayedItems"
+            :key="i"
+            class="realisations__card"
+            v-motion
+            :initial="{ opacity: 0, y: 30 }"
+            :visible-once="{ opacity: 1, y: 0, transition: { duration: 500, delay: i * 80 } }"
+            role="button"
+            tabindex="0"
+            :aria-label="`Ouvrir : ${r.titre}`"
+            @click="openLightbox(r)"
+            @keydown.enter="openLightbox(r)"
+          >
+            <div class="realisations__media">
+              <video
+                v-if="r.type === 'video'"
+                :src="$url(r.src)"
+                class="realisations__video"
+                autoplay
+                muted
+                loop
+                playsinline
+                :aria-label="r.titre"
+              ></video>
+              <img
+                v-else
+                :src="$url(r.src)"
+                :alt="r.titre"
+                class="realisations__img"
+                loading="lazy"
+              />
+              <span class="realisations__badge">{{ r.categorie }}</span>
+            </div>
+            <div class="realisations__info">
+              <h3 class="realisations__card-title">{{ r.titre }}</h3>
+              <p class="realisations__card-desc">{{ r.description }}</p>
+              <span class="realisations__card-lieu">
+                <span class="realisations__card-lieu-dot" aria-hidden="true"></span>
+                {{ r.lieu }}
+              </span>
+            </div>
+          </article>
+        </div>
+
       </div>
 
     </div>
+
+    <!-- Galerie vidéo 3D — accueil, desktop uniquement -->
+    <div v-if="preview" class="realisations__video-cg">
+      <div class="container">
+        <div class="realisations__video-cg-header">
+          <span class="realisations__eyebrow">Nos chantiers en vidéo</span>
+          <h3 class="realisations__video-cg-title">Interventions filmées</h3>
+        </div>
+        <CircularGallery
+          :items="homepageVideos"
+          :radius="380"
+          @select="openLightbox"
+        />
+      </div>
+    </div>
+
   </section>
 
   <!-- Lightbox -->
@@ -351,7 +389,7 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
 .realisations {
   padding-block: var(--space-24);
   background-color: var(--color-black);
-  overflow: hidden;
+  overflow: clip; /* clip sans créer de stacking context — préserve les transforms 3D */
 }
 
 .realisations__inner {
@@ -661,6 +699,57 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
     transform: translateY(-50%);
     color: rgba(255,255,255,0.04);
   }
+}
+
+/* ── Panel full-page (desktop: carousel / mobile: grille) ── */
+.realisations__full-panel {
+  flex: 1;
+  min-width: 0;
+}
+
+.realisations__cg-desktop {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .realisations__cg-desktop {
+    display: block;
+  }
+  .realisations__full-panel .realisations__grid {
+    display: none;
+  }
+}
+
+/* ── Section vidéo 3D — accueil ── */
+.realisations__video-cg {
+  display: none;
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-16);
+}
+
+@media (min-width: 1024px) {
+  .realisations__video-cg {
+    display: block;
+  }
+}
+
+.realisations__video-cg-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+  padding-inline: var(--space-6);
+}
+
+.realisations__video-cg-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--color-white);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  max-width: none;
 }
 
 /* ── Grille complète /realisations ── */
