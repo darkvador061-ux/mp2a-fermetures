@@ -169,14 +169,20 @@ const services = [
   .services__grid {
     grid-template-columns: repeat(6, 1fr);
   }
+  /* Row 1 : 3 cartes égales */
   .services__card:nth-child(1),
-  .services__card:nth-child(2) {
+  .services__card:nth-child(2),
+  .services__card:nth-child(3) {
+    grid-column: span 2;
+  }
+  /* Row 2 : 2 cartes plus larges — spécificité :last-child pour battre la règle 640px */
+  .services__card:nth-child(4) {
     grid-column: span 3;
   }
-  .services__card:nth-child(3),
-  .services__card:nth-child(4),
-  .services__card:nth-child(5) {
-    grid-column: span 2;
+  .services__card:nth-child(5):last-child {
+    grid-column: span 3;
+    max-width: none;
+    margin-inline: 0;
   }
 }
 
