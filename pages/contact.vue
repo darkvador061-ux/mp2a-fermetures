@@ -107,5 +107,6 @@ useHead({
   width: 100%;
   overflow: hidden;
   border-top: 2px solid var(--color-red);
+  isolation: isolate;
 }
 </style>

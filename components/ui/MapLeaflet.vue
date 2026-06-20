@@ -16,7 +16,7 @@ onMounted(() => {
     const L = window.L
 
     mapInstance = L.map(mapEl.value, {
-      center: [43.72, 7.15],
+      center: [43.662, 7.217],
       zoom: 10,
       scrollWheelZoom: false,
       zoomControl: true
@@ -42,8 +42,8 @@ onMounted(() => {
       )
       .openPopup()
 
-    L.circle([43.693, 7.106], {
-      radius: 45000,
+    L.circle([43.662, 7.217], {
+      radius: 26000,
       color: '#E30613',
       fillColor: '#E30613',
       fillOpacity: 0.07,

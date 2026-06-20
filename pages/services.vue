@@ -67,7 +67,8 @@ useHead({
         <p class="services-cta__text">Réponse sous 24h, devis gratuit et sans engagement.</p>
         <div class="services-cta__btns">
           <NuxtLink to="/contact" class="services-cta__btn-primary">Demander un devis gratuit</NuxtLink>
-          <span class="services-cta__btn-secondary">06 98 25 89 37 · 06 84 23 03 76</span>
+          <span class="services-cta__btn-secondary">06 98 25 89 37</span>
+          <span class="services-cta__btn-secondary">06 84 23 03 76</span>
         </div>
       </div>
     </section>
