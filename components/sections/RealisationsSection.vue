@@ -111,7 +111,7 @@ const realisations = [
 const displayedItems = computed(() =>
   props.preview
     ? realisations.filter(r => r.homepage)
-    : realisations.filter(r => !r.homepage)
+    : realisations
 )
 
 const homepageVideos = computed(() =>
@@ -195,25 +195,23 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
       </template>
       <template v-if="!preview">
         <div
-          class="realisations__header"
+          class="realisations__header realisations__header--page"
           v-motion
           :initial="{ opacity: 0, y: 30 }"
           :visible-once="{ opacity: 1, y: 0, transition: { duration: 600 } }"
         >
-          <span class="realisations__header-deco" aria-hidden="true">04</span>
           <p class="realisations__eyebrow">Nos chantiers</p>
-          <h2 class="realisations__title">Nos<br>réalisations</h2>
+          <h1 class="realisations__title">Nos réalisations</h1>
           <p class="realisations__intro">
             Quelques exemples de nos interventions dans les Alpes-Maritimes.
           </p>
         </div>
         <div class="realisations__full-panel">
 
-        <!-- Galerie 3D — desktop uniquement -->
+        <!-- Fan carousel — desktop uniquement -->
         <div class="realisations__cg-desktop">
-          <CircularGallery
+          <FanCarousel
             :items="displayedItems"
-            :radius="390"
             @select="openLightbox"
           />
         </div>
@@ -374,8 +372,6 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
 
 @media (min-width: 1024px) {
   .realisations__inner {
-    flex-direction: row;
-    align-items: flex-start;
     gap: var(--space-16);
   }
 }
@@ -390,11 +386,19 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
   gap: var(--space-5);
 }
 
+.realisations__header--page {
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: var(--space-10);
+}
+
+.realisations__header--page .realisations__intro {
+  max-width: 52ch;
+}
+
 @media (min-width: 1024px) {
   .realisations__header {
-    width: 260px;
-    position: sticky;
-    top: 120px;
     overflow: visible;
   }
 }
@@ -445,7 +449,7 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
   font-size: var(--text-sm);
   color: rgba(255,255,255,0.55);
   line-height: 1.6;
-  max-width: 28ch;
+  max-width: 64ch;
 }
 
 .realisations__cta-btn {

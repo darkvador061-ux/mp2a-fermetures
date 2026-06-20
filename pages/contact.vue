@@ -117,20 +117,10 @@ const brands = ['NICE', 'SOMFY', 'BFT', 'FAAC', 'CARDIN', 'CAME', 'DORMAKABA', '
           </p>
         </div>
       </div>
-      <div
-        class="cp-map__frame-wrap"
-        v-motion
-        :initial="{ opacity: 0 }"
-        :visible-once="{ opacity: 1, transition: { duration: 800, delay: 200 } }"
-      >
-        <iframe
-          class="cp-map__iframe"
-          src="https://maps.google.com/maps?q=Alpes-Maritimes,France&t=&z=10&ie=UTF8&iwloc=&output=embed"
-          title="Zone d'intervention MP2A Fermetures — Alpes-Maritimes"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          allowfullscreen
-        />
+      <div class="cp-map__frame-wrap">
+        <ClientOnly>
+          <MapLeaflet />
+        </ClientOnly>
       </div>
     </section>
 
@@ -312,23 +302,7 @@ const brands = ['NICE', 'SOMFY', 'BFT', 'FAAC', 'CARDIN', 'CAME', 'DORMAKABA', '
 
 .cp-map__frame-wrap {
   width: 100%;
-  aspect-ratio: 16 / 6;
-  min-height: 300px;
   overflow: hidden;
   border-top: 2px solid var(--color-red);
-  filter: grayscale(30%) contrast(1.05);
-}
-
-@media (min-width: 1024px) {
-  .cp-map__frame-wrap {
-    aspect-ratio: 16 / 5;
-  }
-}
-
-.cp-map__iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
 }
 </style>

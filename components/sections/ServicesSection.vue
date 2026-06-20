@@ -56,12 +56,13 @@ const services = [
 
       <div
         class="services__header"
+        :class="{ 'services__header--page': !preview }"
         v-motion
         :initial="{ opacity: 0, y: 30 }"
         :visible-once="{ opacity: 1, y: 0, transition: { duration: 600 } }"
       >
         <p class="services__eyebrow">Ce que nous faisons</p>
-        <h2 class="services__title">Nos prestations</h2>
+        <component :is="preview ? 'h2' : 'h1'" class="services__title">Nos prestations</component>
         <p class="services__intro">
           Spécialistes de la fermeture dans les Alpes-Maritimes, nous intervenons chez les particuliers comme auprès des professionnels — syndics, promoteurs, entreprises.
         </p>
@@ -116,6 +117,14 @@ const services = [
   margin-bottom: var(--space-16);
   border-top: 2px solid var(--color-red);
   padding-top: var(--space-6);
+}
+
+.services__header--page {
+  text-align: center;
+}
+
+.services__header--page .services__intro {
+  margin-inline: auto;
 }
 
 .services__eyebrow {

@@ -20,18 +20,7 @@ useHead({
 </script>
 
 <template>
-  <div>
-
-    <!-- Bandeau page -->
-    <section class="page-banner">
-      <div class="container page-banner__content">
-        <p class="page-banner__eyebrow">MP2A Fermetures</p>
-        <h1 class="page-banner__title">Nos réalisations</h1>
-        <p class="page-banner__sub">
-          Portails, portes de garage, volets, motorisation — nos chantiers dans les Alpes-Maritimes (06).
-        </p>
-      </div>
-    </section>
+  <div class="realisations-page">
 
     <!-- Galerie complète -->
     <RealisationsSection :preview="false" />
@@ -52,57 +41,14 @@ useHead({
 </template>
 
 <style scoped>
-/* ── Bandeau page ── */
-.page-banner {
-  background-color: var(--color-black);
-  color: var(--color-white);
-  padding-top: calc(72px + var(--space-6));
-  padding-bottom: var(--space-8);
-  border-bottom: 3px solid var(--color-red);
-}
-
-@media (min-width: 768px) {
-  .page-banner {
-    padding-top: var(--space-16);
-    padding-bottom: var(--space-12);
-  }
+.realisations-page :deep(.realisations) {
+  padding-top: calc(72px + var(--space-12));
 }
 
 @media (min-width: 1024px) {
-  .page-banner {
-    padding-top: calc(var(--space-20) + 108px);
-    padding-bottom: var(--space-20);
+  .realisations-page :deep(.realisations) {
+    padding-top: calc(108px + var(--space-16));
   }
-}
-
-.page-banner__content {
-  text-align: center;
-}
-
-.page-banner__eyebrow {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.70);
-  margin-bottom: var(--space-3);
-  max-width: none;
-}
-
-.page-banner__title {
-  font-family: var(--font-display);
-  font-size: clamp(var(--text-4xl), 6vw, var(--text-7xl));
-  font-weight: 900;
-  text-transform: uppercase;
-  color: var(--color-white);
-  margin-bottom: var(--space-4);
-}
-
-.page-banner__sub {
-  font-size: var(--text-lg);
-  color: var(--color-grey-mid);
-  max-width: 55ch;
-  margin-inline: auto;
 }
 
 /* ── CTA bas ── */
