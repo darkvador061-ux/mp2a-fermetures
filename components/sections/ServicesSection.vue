@@ -72,7 +72,7 @@ const services = [
           v-for="(service, index) in services"
           :key="service.id"
           class="services__card"
-          :class="index === 0 ? 'services__card--featured' : ''"
+
           v-motion
           :initial="{ opacity: 0, y: 40 }"
           :visible-once="{ opacity: 1, y: 0, transition: { duration: 500, delay: index * 70 } }"
@@ -157,20 +157,26 @@ const services = [
   .services__grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  /* 5e carte seule : la centrer en lui donnant la pleine largeur */
+  .services__card:nth-child(5):last-child {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    margin-inline: auto;
+  }
 }
 
 @media (min-width: 1024px) {
   .services__grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
-  .services__card--featured {
-    grid-column: 1 / 3;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: var(--space-10);
+  .services__card:nth-child(1),
+  .services__card:nth-child(2) {
+    grid-column: span 3;
   }
-  .services__card--featured .services__card-text {
-    font-size: var(--text-lg);
+  .services__card:nth-child(3),
+  .services__card:nth-child(4),
+  .services__card:nth-child(5) {
+    grid-column: span 2;
   }
 }
 

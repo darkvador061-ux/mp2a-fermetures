@@ -50,7 +50,12 @@ async function handleSubmit() {
   <section class="contact" id="contact">
     <div class="container">
 
-      <div class="contact__header">
+      <div
+        class="contact__header"
+        v-motion
+        :initial="{ opacity: 0, y: 28 }"
+        :visible-once="{ opacity: 1, y: 0, transition: { duration: 600 } }"
+      >
         <p class="contact__eyebrow">Réponse sous 24h</p>
         <h2 class="contact__title">Demandez un devis gratuit</h2>
         <p class="contact__intro">
@@ -61,7 +66,12 @@ async function handleSubmit() {
       <div class="contact__layout">
 
         <!-- Formulaire -->
-        <div class="contact__form-wrap">
+        <div
+          class="contact__form-wrap"
+          v-motion
+          :initial="{ opacity: 0, y: 24 }"
+          :visible-once="{ opacity: 1, y: 0, transition: { duration: 600, delay: 150 } }"
+        >
           <form
             v-if="!submitted"
             class="contact__form"
@@ -155,7 +165,12 @@ async function handleSubmit() {
         </div>
 
         <!-- Infos contact -->
-        <aside class="contact__info">
+        <aside
+          class="contact__info"
+          v-motion
+          :initial="{ opacity: 0, y: 24 }"
+          :visible-once="{ opacity: 1, y: 0, transition: { duration: 600, delay: 280 } }"
+        >
           <div class="contact__info-block">
             <p class="contact__info-label">Téléphones</p>
             <span class="contact__info-text">Anthony — 06 98 25 89 37</span>

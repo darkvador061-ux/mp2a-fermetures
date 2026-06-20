@@ -78,29 +78,63 @@ const links = [
 
     </div>
 
-    <!-- Menu mobile -->
-    <Transition name="menu">
+    <!-- Overlay -->
+    <Transition name="overlay">
+      <div
+        v-if="menuOpen"
+        class="header__overlay"
+        aria-hidden="true"
+        @click="menuOpen = false"
+      />
+    </Transition>
+
+    <!-- Drawer -->
+    <Transition name="drawer">
       <div
         v-if="menuOpen"
         id="mobile-menu"
-        class="header__mobile"
+        class="header__drawer"
         role="dialog"
         aria-modal="true"
         aria-label="Menu navigation"
       >
-        <nav>
-          <ul class="header__mobile-list">
+        <div class="header__drawer-top">
+          <NuxtLink to="/" class="header__drawer-logo" aria-label="Accueil">
+            <img :src="$url('/logo-icon.png')" alt="" height="36" aria-hidden="true" />
+          </NuxtLink>
+          <button
+            class="header__drawer-close"
+            @click="menuOpen = false"
+            aria-label="Fermer le menu"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <nav class="header__drawer-nav">
+          <ul class="header__drawer-list">
             <li v-for="link in links" :key="link.to">
-              <NuxtLink :to="link.to">{{ link.label }}</NuxtLink>
+              <NuxtLink :to="link.to" class="header__drawer-link">{{ link.label }}</NuxtLink>
             </li>
           </ul>
         </nav>
-        <NuxtLink to="/contact" class="header__mobile-cta">
-          Demander un devis
-        </NuxtLink>
-        <div class="header__mobile-phones">
-          <span class="header__mobile-phone">06 98 25 89 37 — Anthony</span>
-          <span class="header__mobile-phone">06 84 23 03 76 — Alexandre</span>
+
+        <div class="header__drawer-bottom">
+          <NuxtLink to="/contact" class="header__drawer-cta">
+            Devis gratuit — Réponse 24h
+          </NuxtLink>
+          <div class="header__drawer-phones">
+            <a href="tel:+33698258937" class="header__drawer-phone">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              06 98 25 89 37
+            </a>
+            <a href="tel:+33684230376" class="header__drawer-phone">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              06 84 23 03 76
+            </a>
+          </div>
         </div>
       </div>
     </Transition>
@@ -124,8 +158,7 @@ const links = [
     box-shadow 300ms ease;
 }
 
-.header.is-scrolled,
-.header.menu-open {
+.header.is-scrolled {
   background-color: var(--color-white);
   border-bottom-color: var(--border);
   box-shadow: 0 1px 8px rgba(0,0,0,.06);
@@ -159,8 +192,7 @@ const links = [
   transition: filter 300ms ease;
 }
 
-.header.is-scrolled .header__logo-text,
-.header.menu-open .header__logo-text {
+.header.is-scrolled .header__logo-text {
   filter: brightness(0);
 }
 
@@ -171,12 +203,6 @@ const links = [
   .header__logo-text { height: 42px; }
 }
 
-@media (min-width: 1024px) {
-  .header.is-scrolled .header__logo-text,
-  .header.menu-open .header__logo-text {
-    filter: brightness(0);
-  }
-}
 
 /* ── Nav desktop ── */
 .header__nav {
@@ -290,8 +316,7 @@ const links = [
   transform-origin: center;
 }
 
-.header.is-scrolled .header__burger-bar,
-.header.menu-open .header__burger-bar {
+.header.is-scrolled .header__burger-bar {
   background-color: var(--color-anthracite);
 }
 
@@ -306,92 +331,149 @@ const links = [
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ── Menu mobile ── */
-.header__mobile {
+/* ── Overlay ── */
+.header__overlay {
   position: fixed;
-  inset: 72px 0 0 0;
-  background-color: var(--color-white);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: calc(var(--z-sticky) + 1);
+  backdrop-filter: blur(2px);
+}
+
+.overlay-enter-active,
+.overlay-leave-active { transition: opacity 280ms ease; }
+.overlay-enter-from,
+.overlay-leave-to     { opacity: 0; }
+
+/* ── Drawer ── */
+.header__drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(300px, 85vw);
+  background-color: #111316;
+  border-left: 1px solid rgba(255,255,255,0.06);
+  z-index: calc(var(--z-sticky) + 2);
   display: flex;
   flex-direction: column;
-  padding: var(--space-8) var(--space-6);
-  gap: var(--space-6);
-  border-top: 1px solid var(--border);
   overflow-y: auto;
 }
 
-.header__mobile-list {
+.drawer-enter-active,
+.drawer-leave-active { transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1); }
+.drawer-enter-from,
+.drawer-leave-to     { transform: translateX(100%); }
+
+/* Top du drawer */
+.header__drawer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+}
+
+.header__drawer-logo img {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+.header__drawer-close {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: color 200ms ease, border-color 200ms ease;
+}
+.header__drawer-close:hover {
+  color: var(--color-white);
+  border-color: rgba(255,255,255,0.3);
+}
+
+/* Nav */
+.header__drawer-nav {
+  flex: 0 0 auto;
+  padding: var(--space-6) var(--space-6) var(--space-4);
+}
+
+.header__drawer-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.header__drawer-link {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.75);
+  padding-block: var(--space-4);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: color 200ms ease, padding-left 200ms ease;
+}
+
+.header__drawer-link:hover,
+.header__drawer-link.router-link-exact-active {
+  color: var(--color-white);
+  padding-left: var(--space-2);
+}
+
+.header__drawer-link.router-link-exact-active {
+  color: var(--color-red);
+}
+
+/* Bottom */
+.header__drawer-bottom {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+}
+
+.header__drawer-cta {
+  display: block;
+  padding: var(--space-4);
+  background-color: var(--color-red);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+  white-space: nowrap;
+  transition: background-color var(--transition-fast);
+}
+.header__drawer-cta:hover {
+  background-color: var(--color-red-dark);
+}
+
+.header__drawer-phones {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
 }
 
-.header__mobile-list a {
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  font-weight: 900;
-  color: var(--color-anthracite);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  line-height: 1.2;
-  transition: color var(--transition-fast);
-  display: block;
-  padding-block: var(--space-2);
-  border-bottom: 1px solid var(--border);
-}
-
-.header__mobile-list a:hover,
-.header__mobile-list a.router-link-exact-active {
-  color: var(--color-red);
-}
-
-.header__mobile-cta {
-  display: block;
-  padding: var(--space-4) var(--space-6);
-  background-color: var(--color-red);
-  color: var(--color-white);
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  text-align: center;
-  border-radius: var(--radius-sm);
-  transition: background-color var(--transition-fast);
-  margin-top: auto;
-}
-
-.header__mobile-cta:hover {
-  background-color: var(--color-red-dark);
-}
-
-.header__mobile-phones {
+.header__drawer-phone {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: var(--space-1);
-}
-
-.header__mobile-phone {
-  font-family: var(--font-body);
+  gap: var(--space-2);
   font-size: var(--text-sm);
-  color: var(--color-grey-mid);
-  text-align: center;
-  transition: color var(--transition-fast);
+  color: rgba(255,255,255,0.45);
+  transition: color 200ms ease;
 }
-
-.header__mobile-phone:hover {
-  color: var(--color-anthracite);
-}
-
-/* ── Transition menu ── */
-.menu-enter-active,
-.menu-leave-active {
-  transition: opacity var(--transition-base), transform var(--transition-base);
-}
-.menu-enter-from,
-.menu-leave-to {
-  opacity: 0;
-  transform: translateY(-8px);
+.header__drawer-phone:hover {
+  color: rgba(255,255,255,0.75);
 }
 
 /* ── Desktop ── */

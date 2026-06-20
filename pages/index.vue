@@ -56,7 +56,6 @@ useHead({
     <TrustSection />
     <MarqueeBand />
     <ServicesSection />
-    <MarqueeBand />
     <RealisationsSection />
     <ContactSection />
   </div>

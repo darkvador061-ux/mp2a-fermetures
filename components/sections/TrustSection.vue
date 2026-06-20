@@ -71,6 +71,9 @@ onUnmounted(() => observer?.disconnect())
             v-for="(stat, i) in stats"
             :key="i"
             class="trust__stat"
+            v-motion
+            :initial="{ opacity: 0, y: 30 }"
+            :visible-once="{ opacity: 1, y: 0, transition: { duration: 500, delay: i * 100 } }"
           >
             <strong class="trust__stat-num" :class="{ 'is-visible': numsVisible }">
               {{ counts[i] }}<span class="trust__stat-suffix">{{ stat.suffix }}</span>
@@ -88,9 +91,12 @@ onUnmounted(() => observer?.disconnect())
         <p class="trust__brands-label" aria-label="Marques compatibles">Compatibles & maîtrisées</p>
         <ul class="trust__brands" aria-label="Liste des marques partenaires">
           <li
-            v-for="brand in brands"
+            v-for="(brand, i) in brands"
             :key="brand"
             class="trust__brand"
+            v-motion
+            :initial="{ opacity: 0 }"
+            :visible-once="{ opacity: 1, transition: { duration: 400, delay: i * 60 } }"
           >
             {{ brand }}
           </li>

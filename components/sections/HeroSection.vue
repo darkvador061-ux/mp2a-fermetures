@@ -5,18 +5,38 @@
     </div>
 
     <div class="container hero__content">
-      <p class="hero__eyebrow">Portails · Volets · Portes de garage · Clôtures</p>
+      <p
+        class="hero__eyebrow"
+        v-motion
+        :initial="{ opacity: 0, y: 16 }"
+        :enter="{ opacity: 1, y: 0, transition: { duration: 500, delay: 100 } }"
+      >Portails · Volets · Portes de garage · Clôtures</p>
 
-      <h1 class="hero__title">
+      <h1
+        class="hero__title"
+        v-motion
+        :initial="{ opacity: 0, y: 24 }"
+        :enter="{ opacity: 1, y: 0, transition: { duration: 600, delay: 220 } }"
+      >
         Votre expert portails<br>
         <span class="hero__title-accent">&amp; fermetures 06.</span>
       </h1>
 
-      <p class="hero__subtitle">
+      <p
+        class="hero__subtitle"
+        v-motion
+        :initial="{ opacity: 0, y: 18 }"
+        :enter="{ opacity: 1, y: 0, transition: { duration: 500, delay: 380 } }"
+      >
         Installation, motorisation et dépannage — Alpes-Maritimes (06)
       </p>
 
-      <div class="hero__ctas">
+      <div
+        class="hero__ctas"
+        v-motion
+        :initial="{ opacity: 0, y: 18 }"
+        :enter="{ opacity: 1, y: 0, transition: { duration: 500, delay: 500 } }"
+      >
         <NuxtLink to="/contact" class="hero__cta-primary">
           Demander un devis gratuit
         </NuxtLink>
@@ -29,7 +49,12 @@
       </div>
 
       <!-- Badges de confiance -->
-      <div class="hero__badges">
+      <div
+        class="hero__badges"
+        v-motion
+        :initial="{ opacity: 0, y: 14 }"
+        :enter="{ opacity: 1, y: 0, transition: { duration: 500, delay: 650 } }"
+      >
         <div class="hero__badge">
           <strong>10+</strong>
           <span>ans d'expérience</span>
@@ -287,13 +312,14 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-6);
-  flex-wrap: wrap;
+  gap: var(--space-4);
+  flex-wrap: nowrap;
 }
 
 @media (min-width: 1024px) {
   .hero__badges {
     justify-content: flex-start;
+    gap: var(--space-6);
   }
 }
 
@@ -377,18 +403,9 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 }
 
 
-@media (max-width: 479px) {
+@media (max-width: 639px) {
   .hero__badge-sep {
     display: none;
-  }
-  .hero__badges {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-2);
-    width: 100%;
-  }
-  .hero__badge {
-    align-items: center;
   }
   .hero__badge span {
     font-size: 10px;

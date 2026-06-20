@@ -181,6 +181,10 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
         </div>
         <div class="realisations__carousel-wrap">
           <CardCarousel :items="displayedItems" @select="openLightbox" />
+          <p class="realisations__carousel-hint" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Cliquez sur une photo pour agrandir
+          </p>
         </div>
         <div class="realisations__cta-row">
           <NuxtLink to="/realisations" class="realisations__cta-btn">
@@ -494,6 +498,21 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
 
 .realisations__header--preview .realisations__eyebrow {
   margin-top: var(--space-2);
+}
+
+/* ── Hint "cliquer" ── */
+.realisations__carousel-hint {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,0.30);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-top: var(--space-3);
+  padding-inline: var(--space-2);
+  max-width: none;
 }
 
 /* ── Bouton "Voir tout" sous le carousel ── */

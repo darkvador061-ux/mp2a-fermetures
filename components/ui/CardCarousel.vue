@@ -134,6 +134,20 @@ onUnmounted(() => {
   overflow: hidden;
   cursor: default;
   padding-block: var(--space-4);
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
 }
 
 /* ── Piste (les 3 sets bout à bout) ── */
