@@ -173,11 +173,11 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
           :initial="{ opacity: 0, y: 24 }"
           :visible-once="{ opacity: 1, y: 0, transition: { duration: 600 } }"
         >
+          <p class="realisations__eyebrow">Nos chantiers</p>
           <h2 class="realisations__title realisations__title--inline">Nos réalisations</h2>
           <p class="realisations__intro">
             Quelques exemples de nos interventions dans les Alpes-Maritimes.
           </p>
-          <p class="realisations__eyebrow">Nos chantiers</p>
         </div>
         <div class="realisations__carousel-wrap">
           <CardCarousel :items="displayedItems" @select="openLightbox" />
@@ -455,23 +455,24 @@ onUnmounted(() => { if (typeof window !== 'undefined') window.removeEventListene
 .realisations__cta-btn {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-white);
   cursor: pointer;
-  border: 1.5px solid var(--color-red);
-  padding: var(--space-2) var(--space-4);
+  background-color: var(--color-red);
+  border: 2px solid var(--color-red);
+  padding: var(--space-4) var(--space-8);
   width: fit-content;
-  transition: color 200ms ease, background-color 200ms ease;
+  transition: background-color 200ms ease, border-color 200ms ease;
 }
 
 .realisations__cta-btn:hover {
-  background-color: var(--color-red);
-  color: var(--color-white);
+  background-color: var(--color-red-dark);
+  border-color: var(--color-red-dark);
 }
 
 /* ── Accueil : layout colonne pleine largeur ── */

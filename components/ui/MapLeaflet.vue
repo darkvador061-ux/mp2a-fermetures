@@ -43,7 +43,7 @@ onMounted(() => {
       .openPopup()
 
     L.circle([43.693, 7.106], {
-      radius: 60000,
+      radius: 45000,
       color: '#E30613',
       fillColor: '#E30613',
       fillOpacity: 0.07,

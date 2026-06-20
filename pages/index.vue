@@ -57,6 +57,6 @@ useHead({
     <MarqueeBand />
     <ServicesSection />
     <RealisationsSection />
-    <ContactSection />
+    <WhyUsSection />
   </div>
 </template>
